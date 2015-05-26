@@ -437,5 +437,14 @@ body.x-desktop {
 .fa-color-blue{
 	color: #1572B3;
 }
+.marquee{
+	color:rgba(250,100,100,0.7);height:40px;line-heihgt:40px;width:400px;
+	overflow: -webkit-marquee;
+	-webkit-marquee-style: scroll;
+	-webkit-marquee-repetition: infinite;
+	-webkit-marquee-direction: up;
+	-webkit-marquee-speed:slow;
+	border:1px #ccc solid;
+}
 /*
 #1572B3*/
