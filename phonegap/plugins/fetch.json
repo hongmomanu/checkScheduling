@@ -1,0 +1,28 @@
+{
+    "com.ququplay.websocket.WebSocket": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/mkuklis/phonegap-websocket",
+            "subdir": "."
+        }
+    },
+    "com.wordsbaking.cordova.tts": {
+        "source": {
+            "type": "registry",
+            "id": "com.wordsbaking.cordova.tts"
+        }
+    },
+    "com.lefortsoftware.ttsplugin": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/steevelefort/cordova3-ios-tts-plugin.git",
+            "subdir": "."
+        }
+    },
+    "com.rjfun.cordova.plugin.iflyspeech": {
+        "source": {
+            "type": "registry",
+            "id": "com.rjfun.cordova.plugin.iflyspeech"
+        }
+    }
+}

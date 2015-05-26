@@ -1,0 +1,6 @@
+# view AndroidManifest.xml #generated:11
+-keep class com.lefortsoftware.ttsplugin { <init>(...); }
+
+# view AndroidManifest.xml #generated:5
+-keep class com.mycompany.checkScheduling.CordovaApp { <init>(...); }
+

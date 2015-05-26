@@ -1,0 +1,9 @@
+{
+  "name": "nw-checkScheduling",
+  "main": "index.html",
+  "window": {
+    "title": "checkScheduling",
+    "toolbar": true
+
+  }
+}
