@@ -14,7 +14,8 @@ Ext.application({
     name: 'checkScheduling',
 
     requires: [
-        'Ext.MessageBox'
+        'Ext.MessageBox',
+        'Ext.util.DelayedTask'
     ],
 
     controllers: [

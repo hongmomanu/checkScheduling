@@ -2,7 +2,7 @@ Ext.define('checkScheduling.store.Onlines', {
     extend: 'Ext.data.Store',
     config: {
         model: 'checkScheduling.model.Online',
-        autoLoad: true
+        autoLoad: false
         //sorters: '_id',
         /*grouper: {
             groupFn: function(record) {

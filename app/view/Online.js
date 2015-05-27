@@ -4,10 +4,11 @@ Ext.define('checkScheduling.view.Online', {
     xtype:'onlinelist',
     //cls: 'x-contacts',
     config: {
-        //title: '医生圈',
-        //cls: 'x-contacts',
+
         variableHeights: true,
         itemId:'onlinelist',
+        emptyText: '<div>无相关内容</div>',
+
 
         //refreshHeightOnUpdate :false,
         scrollToTopOnRefresh :true,
@@ -15,17 +16,17 @@ Ext.define('checkScheduling.view.Online', {
         //indexBar:true,
         store: 'Onlines',
 
-        listeners: {
+        /*listeners: {
             painted: function(){
 
                 this.fireEvent('viewshow', this);
             }
-        },
+        },*/
 
-        items: [
+        /*items: [
 
 
-        ],
+        ],*/
 
         itemTpl: [
             '<div class="headshot">',
