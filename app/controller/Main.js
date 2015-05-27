@@ -151,7 +151,7 @@ Ext.define('checkScheduling.controller.Main', {
             //alert(1111);
             var data=JSON.parse(event.data);
 
-            Ext.Msg.alert("1111");
+            //Ext.Msg.alert("1111");
 
 
             console.log(data);
@@ -185,7 +185,7 @@ Ext.define('checkScheduling.controller.Main', {
     getOnlineData:function(){
 
         var me=this;
-        testobj=this.getOnlinelist();
+
         var store=this.getOnlinelist().getStore();
         //testobj=store;
         var sortno= 0;
@@ -234,8 +234,6 @@ Ext.define('checkScheduling.controller.Main', {
         };
         CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
 
-
-
     },
     makevoiceanddisplay:function(store,index,me){
         //var me=this;
@@ -263,7 +261,7 @@ Ext.define('checkScheduling.controller.Main', {
             if(item.times==2){
                 indexnum=indexnum+1;
             }
-            //Ext.Msg.alert("3");
+
 
             var text="请"+item.showno+item.patname+" 到"+item.roomno+"号机房门口等候检查";
 
@@ -276,16 +274,25 @@ Ext.define('checkScheduling.controller.Main', {
 
     },
     playvoice:function(text,store,index,callback,me){
-        //var me=this;
-        TTS.speak({
-            text: text,
-            locale: 'zh-CN'/*,
-            rate: 0.75*/
-        }, function(){
-            callback(store,index,me)
-        }, function (reason) {
-            Ext.Msg.alert('fail',reason);
+        var voiceurl=localStorage.serverurl+'audio/alert.mp3';
+        var tipvoice=new Audio(voiceurl);
+        tipvoice.addEventListener('ended',function(){
+
+            TTS.speak({
+                text: text,
+                locale: 'zh-CN'/*,
+                 rate: 0.75*/
+            }, function(){
+                callback(store,index,me)
+            }, function (reason) {
+                Ext.Msg.alert('fail',reason);
+            });
+
+
         });
+        tipvoice.play();
+        //var me=this;
+
 
 
     },
