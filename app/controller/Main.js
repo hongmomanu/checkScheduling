@@ -56,6 +56,7 @@ Ext.define('checkScheduling.controller.Main', {
         }
     },
 
+
     showSettingForm:function(item){
         var overlay = Ext.Viewport.add({
             xtype: 'panel',
@@ -130,6 +131,7 @@ Ext.define('checkScheduling.controller.Main', {
 
     },
     websocketInit:function(){
+        testobj=this;
 
         var url=localStorage.serverurl;
         //var roomno=localStorage.roomno;
@@ -197,7 +199,7 @@ Ext.define('checkScheduling.controller.Main', {
         var successFunc = function (response, action) {
             var res=JSON.parse(response.responseText);
             for(var i=0;i<res.length;i++){
-                store.add(item);
+                store.add(res[i]);
             }
 
         };
@@ -207,9 +209,43 @@ Ext.define('checkScheduling.controller.Main', {
         };
         var url = "getbigscreenpasseddata";
         var params = {
-
+            linenos:linenos
         };
         CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
+
+    },
+    makeColor:function(res){
+        var store=this.getPassednum().getStore();
+        var data=store.data.items;
+
+        for(var j=0;j<res.length;j++){
+            for(var i=0;i<data.length;i++){
+                if(res[j].sortcode==data[i].get('sortcode')){
+                    var raw=data[i].raw;
+                    raw.css=true;
+                    console.log("hahah");
+                    data[i].set(raw);
+                }
+
+            }
+
+        }
+
+
+    },
+    removePassed:function(item){
+        var store=this.getPassednum().getStore();
+        var data=store.data.items;
+
+
+        for(var i=0;i<data.length;i++){
+            if(item.get('sortcode')==data[i].get('sortcode')){
+                store.removeAt(i);
+            }
+
+        }
+
+
 
     },
     getOnlineData:function(me){
@@ -228,6 +264,7 @@ Ext.define('checkScheduling.controller.Main', {
 
         var successFunc = function (response, action) {
             var res=JSON.parse(response.responseText);
+            me.makeColor(res);
 
             if(!me.isplaying)me.playlist=[];
 
@@ -237,7 +274,6 @@ Ext.define('checkScheduling.controller.Main', {
                 }else{
                     me.playlist=res;
                     me.isplaying=true;
-
                     me.makevoiceanddisplay(store,0,me);
                 }
 
@@ -259,8 +295,20 @@ Ext.define('checkScheduling.controller.Main', {
     },
     makevoiceanddisplay:function(store,index,me){
         //console.log(1)
+        /*var a=Ext.select('.flash');
+        a.removeCls('flash');*/
+        if(store.data.items.length>0){
+            var num=store.data.items.length-1;
+            var raw=store.data.items[num].raw;
+            raw.css='noflash';
+            store.data.items[num].set(raw);
+            me.removePassed(store.data.items[num],num);
+
+        }
         if(me.playlist.length-1>=index){
             var item=me.playlist[index];
+
+            item.css='flash';
             store.add(item);
             var text="请"+item.showno+item.patname+" 到"+item.roomno+"号机房门口等候检查";
 
@@ -276,27 +324,32 @@ Ext.define('checkScheduling.controller.Main', {
 
     },
     speaktimes:0,
-    isspeacked:false,
+
     playvoice:function(text,store,index,callback,me){
 
         //callback(store,index,me);
 
-            var voiceurl=localStorage.serverurl+'audio/alert.mp3';
+            var voiceurl=localStorage.serverurl+'audio/alert.wav';
             var tipvoice=new Audio(voiceurl);
+
 
             tipvoice.addEventListener('ended',function(){
                 me.speaktimes++;
+                try{
+                    navigator.speech.startSpeaking( text , {voice_name: 'xiaoyan'} );
+                }catch (e){}
+                finally{
+                    setTimeout(function(){
+                        if(me.speaktimes==2){
+                            me.speaktimes=0;
+                            callback(store,index+1,me);
+                        }else{
+                            tipvoice.play()
+                        }
+                    },7000)
+                }
 
 
-                navigator.speech.startSpeaking( text , {voice_name: 'xiaoyan'} );
-                setTimeout(function(){
-                    if(me.speaktimes==2){
-                        me.speaktimes=0;
-                        callback(store,index+1,me);
-                    }else{
-                        tipvoice.play()
-                    }
-                },7000)
 
 
             });
@@ -314,6 +367,7 @@ Ext.define('checkScheduling.controller.Main', {
         //navigator.speech.startSpeaking( "社保卡", {voice_name: 'xiaoyan'} );
         this.websocketInit();
         this.getOnlineData(this);
+        this.getPassedData();
 
 
 
