@@ -216,6 +216,18 @@ Ext.define('checkScheduling.controller.Main', {
         }, 5000)
 
     },
+    autoscrollData:function(store){
+        var me=this;
+        var listscroll=me.getOnlinelist().getScrollable().getScroller();
+        var scrollheight=listscroll.getSize().y;
+        var bodyheight=Ext.getBody().getHeight();
+        if((scrollheight-(bodyheight*0.9-60))>=0){
+
+            store.removeAt(0);
+
+        }
+
+    },
     getPassedData:function(){
 
         var me=this;
@@ -255,7 +267,6 @@ Ext.define('checkScheduling.controller.Main', {
                 if(res[j].sortcode==data[i].get('sortcode')){
                     var raw=data[i].raw;
                     raw.css=true;
-                    console.log("hahah");
                     data[i].set(raw);
                 }
 
@@ -326,6 +337,7 @@ Ext.define('checkScheduling.controller.Main', {
 
     },
     makevoiceanddisplay:function(store,index,me){
+        testobj=me;
         //console.log(1)
         /*var a=Ext.select('.flash');
         a.removeCls('flash');*/
@@ -342,6 +354,7 @@ Ext.define('checkScheduling.controller.Main', {
 
             item.css='flash';
             store.add(item);
+            me.autoscrollData(store);
             var text="请"+item.showno+item.patname+" 到"+item.roomno+"号机房门口等候检查";
 
             me.playvoice(text,store,index,me.makevoiceanddisplay,me);
