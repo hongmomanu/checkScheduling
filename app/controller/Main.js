@@ -160,6 +160,7 @@ Ext.define('checkScheduling.controller.Main', {
             console.log(data);
 
             me.getOnlineData(me);
+            me.getPassedData();
 
         };
         this.socket.onclose = function(event) {
@@ -184,7 +185,29 @@ Ext.define('checkScheduling.controller.Main', {
     isplaying:false,
 
     playlist:[],
+    scrollinit:0,
+    space:30,
+    autoscrollshow:function(){
+        var me=this;
+        var listscroll=me.getPassednum().getScrollable().getScroller();
+        setInterval(function(){
+            var scrollheight=listscroll.getSize().y;
+            var bodyheight=Ext.getBody().getHeight();
+            if((scrollheight-(bodyheight*0.9-60))>=me.scrollinit){
 
+                me.scrollinit=me.scrollinit+me.space;
+                listscroll.scrollTo(0,me.scrollinit);
+
+            }else{
+                me.scrollinit=0;
+                listscroll.scrollToTop();
+            }
+
+
+
+        }, 3000)
+
+    },
     getPassedData:function(){
 
         var me=this;
@@ -201,6 +224,7 @@ Ext.define('checkScheduling.controller.Main', {
             for(var i=0;i<res.length;i++){
                 store.add(res[i]);
             }
+            me.autoscrollshow();
 
         };
         var failFunc = function (response, action) {
