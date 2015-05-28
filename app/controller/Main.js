@@ -195,7 +195,7 @@ Ext.define('checkScheduling.controller.Main', {
             var bodyheight=Ext.getBody().getHeight();
             if((scrollheight-(bodyheight*0.9-60))>=me.scrollinit){
 
-                me.scrollinit=me.scrollinit+me.space;
+                me.scrollinit=me.scrollinit+(bodyheight*0.9-90);
                 listscroll.scrollTo(0,me.scrollinit);
 
             }else{
@@ -205,7 +205,7 @@ Ext.define('checkScheduling.controller.Main', {
 
 
 
-        }, 3000)
+        }, 5000)
 
     },
     getPassedData:function(){
@@ -224,7 +224,7 @@ Ext.define('checkScheduling.controller.Main', {
             for(var i=0;i<res.length;i++){
                 store.add(res[i]);
             }
-            me.autoscrollshow();
+
 
         };
         var failFunc = function (response, action) {
@@ -384,14 +384,13 @@ Ext.define('checkScheduling.controller.Main', {
 
     initRender: function () {
 
-        //this.playvoice();
-        //localStorage.serverurl="http://192.168.2.100:3000/";
-        //navigator.speech.startSpeaking( "社保卡", {voice_name: 'xiaoyan'} );
+
 
         //navigator.speech.startSpeaking( "社保卡", {voice_name: 'xiaoyan'} );
         this.websocketInit();
         this.getOnlineData(this);
         this.getPassedData();
+        this.autoscrollshow();
 
 
 
