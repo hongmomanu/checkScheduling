@@ -156,11 +156,19 @@ Ext.define('checkScheduling.controller.Main', {
 
             //Ext.Msg.alert("1111");
 
+            if(data.type==1){
+                if(localStorage.roomno==data.roomno){
+                    var content=data.content;
+                    var str='<div><marquee  scrollamount=2>'+content+'</marquee></div>';
+                    me.getTippanel().setHtml(str);
 
-            console.log(data);
+                }
+            }else if(data.type==0){
+                me.getOnlineData(me);
+                me.getPassedData();
+            }
 
-            me.getOnlineData(me);
-            me.getPassedData();
+
 
         };
         this.socket.onclose = function(event) {
