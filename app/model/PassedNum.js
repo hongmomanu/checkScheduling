@@ -6,6 +6,7 @@ Ext.define('checkScheduling.model.PassedNum', {
             'name',
             'sortno',
             'patname',
+            'linenos',
             'roomno',
             'showno'
 

@@ -6,6 +6,7 @@ Ext.define('checkScheduling.model.Online', {
             'name',
             'sortno',
             'patname',
+            'linenos',
             'roomno',
             'showno'
 

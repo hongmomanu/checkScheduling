@@ -130,6 +130,7 @@ Ext.define('checkScheduling.controller.Main', {
 
     },
     websocketInit:function(){
+
         var url=localStorage.serverurl;
         //var roomno=localStorage.roomno;
         if(!url||url==""){
@@ -156,7 +157,7 @@ Ext.define('checkScheduling.controller.Main', {
 
             console.log(data);
 
-            me.getOnlineData();
+            me.getOnlineData(me);
 
         };
         this.socket.onclose = function(event) {
@@ -182,46 +183,67 @@ Ext.define('checkScheduling.controller.Main', {
 
     playlist:[],
 
-    getOnlineData:function(){
+    getPassedData:function(){
 
         var me=this;
-
-        var store=this.getOnlinelist().getStore();
-        //testobj=store;
-        var sortno= 0;
+        var store=this.getPassednum().getStore();
+        var linenos= 0;
         if(store.data.items.length>0){
 
+            linenos=store.data.items[store.data.items.length-1].get('linenos');
         }else{
-            sortno=0;
+            linenos=0;
+        }
+        var successFunc = function (response, action) {
+            var res=JSON.parse(response.responseText);
+            for(var i=0;i<res.length;i++){
+                store.add(item);
+            }
+
+        };
+        var failFunc = function (response, action) {
+            Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+
+        };
+        var url = "getbigscreenpasseddata";
+        var params = {
+
+        };
+        CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
+
+    },
+    getOnlineData:function(me){
+
+       // var me=this;
+
+        var store=me.getOnlinelist().getStore();
+
+        var linenos= 0;
+        if(store.data.items.length>0){
+
+            linenos=store.data.items[store.data.items.length-1].get('linenos');
+        }else{
+            linenos=0;
         }
 
         var successFunc = function (response, action) {
             var res=JSON.parse(response.responseText);
+
             if(!me.isplaying)me.playlist=[];
+
             if(res.length>0){
-
-
-
                 if(me.isplaying){
                     me.playlist=me.playlist.concat(res);
                 }else{
                     me.playlist=res;
                     me.isplaying=true;
-                    //Ext.Msg.alert(12);
+
                     me.makevoiceanddisplay(store,0,me);
                 }
 
             }
 
-            //console.log(res);
-            /*for(var i=0;i<res.length;i++){
-                //console.log(res[i]);
-                /!*if()
-                store.add(res[i]);
-                me.playlist.push(res[i]);*!/
-            }*/
-            //if(res.length>0&&!me.isplaying)me.playvoice();
-            //store.addData(res);
+
 
         };
         var failFunc = function (response, action) {
@@ -230,69 +252,55 @@ Ext.define('checkScheduling.controller.Main', {
         };
         var url = "getbigscreendata";
         var params = {
-            sortno:sortno
+            linenos:linenos
         };
         CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
 
     },
     makevoiceanddisplay:function(store,index,me){
-        //var me=this;
-         //Ext.Msg.alert("1");
-        //var data =me.playlist;
+        //console.log(1)
         if(me.playlist.length-1>=index){
-
             var item=me.playlist[index];
-
-            var indexnum=index;
-            if(item.times>=2)return;
-            //Ext.Msg.alert("2");
-
-            if(item.times==undefined){
-                if(store.data.items.length==9){
-                    store.removeAt(0);
-                }
-
-                store.add(item);
-                item.times=1;
-            }
-            else {
-                item.times=item.times+1;
-            }
-            if(item.times==2){
-                indexnum=indexnum+1;
-            }
-
-
+            store.add(item);
             var text="请"+item.showno+item.patname+" 到"+item.roomno+"号机房门口等候检查";
 
-            me.playvoice(text,store,indexnum,me.makevoiceanddisplay,me);
+            me.playvoice(text,store,index,me.makevoiceanddisplay,me);
         }else{
             me.isplaying=false;
+            me.playlist=[];
+            /*navigator.speech.removeEventListener("SpeakCompleted",function(){});
+            navigator.speech.stopSpeaking();*/
         }
 
 
 
     },
+    speaktimes:0,
+    isspeacked:false,
     playvoice:function(text,store,index,callback,me){
-        var voiceurl=localStorage.serverurl+'audio/alert.mp3';
-        var tipvoice=new Audio(voiceurl);
-        tipvoice.addEventListener('ended',function(){
 
-            TTS.speak({
-                text: text,
-                locale: 'zh-CN'/*,
-                 rate: 0.75*/
-            }, function(){
-                callback(store,index,me)
-            }, function (reason) {
-                Ext.Msg.alert('fail',reason);
+        //callback(store,index,me);
+
+            var voiceurl=localStorage.serverurl+'audio/alert.mp3';
+            var tipvoice=new Audio(voiceurl);
+
+            tipvoice.addEventListener('ended',function(){
+                me.speaktimes++;
+
+
+                navigator.speech.startSpeaking( text , {voice_name: 'xiaoyan'} );
+                setTimeout(function(){
+                    if(me.speaktimes==2){
+                        me.speaktimes=0;
+                        callback(store,index+1,me);
+                    }else{
+                        tipvoice.play()
+                    }
+                },7000)
+
+
             });
-
-
-        });
-        tipvoice.play();
-        //var me=this;
-
+            tipvoice.play();
 
 
     },
@@ -300,8 +308,12 @@ Ext.define('checkScheduling.controller.Main', {
     initRender: function () {
 
         //this.playvoice();
+        //localStorage.serverurl="http://192.168.2.100:3000/";
+        //navigator.speech.startSpeaking( "社保卡", {voice_name: 'xiaoyan'} );
+
+        //navigator.speech.startSpeaking( "社保卡", {voice_name: 'xiaoyan'} );
         this.websocketInit();
-        this.getOnlineData();
+        this.getOnlineData(this);
 
 
 
