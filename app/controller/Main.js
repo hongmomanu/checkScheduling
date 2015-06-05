@@ -170,6 +170,8 @@ Ext.define('checkScheduling.controller.Main', {
             }else if(data.type==0){
                 me.getOnlineData(me);
                 me.getPassedData();
+            }else if(data.type==3){
+                localStorage.totaltimes=data.totaltimes;
             }
 
 
@@ -220,9 +222,9 @@ Ext.define('checkScheduling.controller.Main', {
         }, 5000)
 
     },
-    autoscrollData:function(store){
+    autoscrollData:function(store,list){
         var me=this;
-        var listscroll=me.getOnlinelist().getScrollable().getScroller();
+        var listscroll=list.getScrollable().getScroller();
         var scrollheight=listscroll.getSize().y;
         var bodyheight=Ext.getBody().getHeight();
         if((scrollheight-(bodyheight*0.9-60))>=0){
@@ -341,16 +343,49 @@ Ext.define('checkScheduling.controller.Main', {
 
     },
     makevoiceanddisplay:function(store,index,me){
-        testobj=me;
+        var list1=me.getOnlinelist();
+        var list2=me.getOnlinelist2();
+        var list=null;
+        try{
+            if(me.playlist.length-1>=index){
+                var item=me.playlist[index];
+                var showno=item.showno;
+                if(showno[showno.length-1]%2==0){
+                    store=list2.getStore();
+                    list=list2;
+                }else{
+                    store=list1.getStore();
+                    list=list1;
+                }
+            }
+        }catch(e){
+            store=list1.getStore();
+            list=list1;
+        }
+        finally{
+
+        }
+
+
+
+
         //console.log(1)
         /*var a=Ext.select('.flash');
         a.removeCls('flash');*/
-        if(store.data.items.length>0){
-            var num=store.data.items.length-1;
-            var raw=store.data.items[num].raw;
+        if(list1.getStore().data.items.length>0){
+            var num=list1.getStore().data.items.length-1;
+            var raw=list1.getStore().data.items[num].raw;
             raw.css='noflash';
-            store.data.items[num].set(raw);
-            me.removePassed(store.data.items[num],num);
+            list1.getStore().data.items[num].set(raw);
+            me.removePassed(list1.getStore().data.items[num],num);
+
+        }
+        if(list2.getStore().data.items.length>0){
+            var num=list2.getStore().data.items.length-1;
+            var raw=list2.getStore().data.items[num].raw;
+            raw.css='noflash';
+            list2.getStore().data.items[num].set(raw);
+            me.removePassed(list2.getStore().data.items[num],num);
 
         }
         if(me.playlist.length-1>=index){
@@ -358,7 +393,7 @@ Ext.define('checkScheduling.controller.Main', {
 
             item.css='flash';
             store.add(item);
-            me.autoscrollData(store);
+            me.autoscrollData(store,list);
             var text="请"+item.showno+item.patname+" 到"+item.roomname+"号机房门口等候检查";
 
             me.playvoice(text,store,index,me.makevoiceanddisplay,me);
@@ -391,7 +426,7 @@ Ext.define('checkScheduling.controller.Main', {
             finally{
 
                 setTimeout(function(){
-                    if(me.speaktimes==me.totaltimes){
+                    if(me.speaktimes>=localStorage.totaltimes){
                         me.speaktimes=0;
                         callback(store,index+1,me);
                     }else{
@@ -417,7 +452,7 @@ Ext.define('checkScheduling.controller.Main', {
         }finally{
 
         }
-
+        if(!localStorage.totaltimes)localStorage.totaltimes=2;
         this.websocketInit();
         this.getOnlineData(this);
         this.getPassedData();

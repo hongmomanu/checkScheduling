@@ -27,7 +27,36 @@ Ext.define('checkScheduling.view.Main', {
                             {
                                 xtype : 'toolbar',
                                 docked: 'top',
-                                title: '叫 号 列 表',
+                                title: '叫 号 列 表'/*,
+                                items:[
+                                    {
+                                        xtype:'button',
+                                        docked: 'right',
+                                        itemId:'settingbtn',
+                                        iconCls:'settings'
+                                    }
+                                ]*/
+                            },
+
+                            {
+                                xtype:'onlinelist'
+                            }
+
+
+                        ]
+
+
+                    },
+                    {
+                        flex:1,
+                        layout:'fit',
+                        //style: 'border-style:solid;',
+                        //style: 'background-color: #5E99CC;border-right-style:solid;',
+                        items:[
+                            {
+                                xtype : 'toolbar',
+                                docked: 'top',
+                                /*title: '叫 号 列 表',*/
                                 items:[
                                     {
                                         xtype:'button',
@@ -39,7 +68,7 @@ Ext.define('checkScheduling.view.Main', {
                             },
 
                             {
-                                xtype:'onlinelist'
+                                xtype:'onlinelist2'
                             }
 
 
