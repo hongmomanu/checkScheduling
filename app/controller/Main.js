@@ -453,11 +453,13 @@ Ext.define('checkScheduling.controller.Main', {
                     function(entry) {
                         //console.log("download complete: " + entry.fullPath);
                         Ext.Viewport.unmask();
+
                         //Ext.Msg.alert("succ",entry.fullPath);
                         cordova.plugins.fileOpener2.open(
                             fileEntry.toInternalURL(),
                             'application/vnd.android.package-archive'
                         );
+                        navigator.app.exitApp();
 
 
 
