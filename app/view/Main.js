@@ -106,7 +106,7 @@ Ext.define('checkScheduling.view.Main', {
                 itemId:'tip',
 
                 //style: 'background-color:;',
-                html:'<div><marquee  scrollamount=2>温馨提示：（滚动播放，内容可被修改）温馨提示：（滚动播放，内容可被修改）温馨提示：（滚动播放，内容可被修改）</marquee></div>'
+                html:'<div><marquee   scrollamount=2>温馨提示：（滚动播放，内容可被修改）温馨提示：（滚动播放，内容可被修改）温馨提示：（滚动播放，内容可被修改）</marquee></div>'
             }
         ]
     }

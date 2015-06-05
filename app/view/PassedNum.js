@@ -9,7 +9,7 @@ Ext.define('checkScheduling.view.PassedNum', {
         store: 'PassedNums',
         itemId:'passednum',
         emptyText: '<div>无相关内容</div>',
-        cls:'columnlist5',
+        cls:'columnlist3',
         itemTpl: [
             '<div class="',
             '<tpl if="css">',
