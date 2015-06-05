@@ -426,6 +426,10 @@ body.x-desktop {
 	width: 33%;
 	display: inline-block;
 }
+.columnlist3  .x-dataview-item {
+	width: 33%;
+	display: inline-block;
+}
 .columnlist5  .x-dataview-item {
 	width: 20%;
 	display: inline-block;
@@ -466,7 +470,8 @@ body.x-desktop {
 	50%{
 		opacity: 1;
 		color: #ff0000;
-		font-size: 18px;
+		/*font-size: 18px;*/
+		font-size:x-large;
 	}
 	100%{
 		opacity: 0;
@@ -479,7 +484,8 @@ body.x-desktop {
 	50%{
 		opacity: 1;
 		color: #ff0000;
-		font-size: 18px;
+		/*font-size: 18px;*/
+		font-size:x-large;
 	}
 	100%{
 		opacity: 0;
@@ -490,11 +496,13 @@ body.x-desktop {
      top: 10px;
      left: 10px;
      width: 200px;*/
+	font-size: x-large;
  	color: #0000ff;
   	-webkit-animation:flash 3s infinite  cubic-bezier(1,0,0.5,0) ;
  	animation:flash 5s infinite  cubic-bezier(1,0,0.5,0) ;
 	 }
 .noflash{
+	font-size: x-large;
 	color: dodgerblue;
 }
 /*
