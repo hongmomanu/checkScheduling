@@ -6,6 +6,14 @@ body.x-desktop {
 	font-size:100%;
 }
 
+@font-face {
+	font-family: 'LeagueGothicRegular';
+	src: url('fonts/leaguegothic/League_Gothic-webfont.eot');
+	src: local('☺'), url('fonts/leaguegothic/League_Gothic-webfont.woff') format('woff'), url('fonts/leaguegothic/League_Gothic-webfont.ttf') format('truetype'), url('fonts/leaguegothic/League_Gothic-webfont.svg#webfontFHzvtkso') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
 .separator {
 	font-size: 30px;
 	color: #6EA6CC;
@@ -428,6 +436,7 @@ body.x-desktop {
 }
 .columnlist3  .x-dataview-item {
 	width: 33%;
+	font-size: x-large;
 	display: inline-block;
 }
 .columnlist5  .x-dataview-item {
@@ -470,6 +479,7 @@ body.x-desktop {
 	50%{
 		opacity: 1;
 		color: #ff0000;
+		font-family: 'LeagueGothicRegular';
 		/*font-size: 18px;*/
 		font-size:x-large;
 	}
@@ -484,6 +494,7 @@ body.x-desktop {
 	50%{
 		opacity: 1;
 		color: #ff0000;
+		font-family: 'LeagueGothicRegular';
 		/*font-size: 18px;*/
 		font-size:x-large;
 	}
@@ -497,13 +508,84 @@ body.x-desktop {
      left: 10px;
      width: 200px;*/
 	font-size: x-large;
+	font-family: 'LeagueGothicRegular';
  	color: #0000ff;
   	-webkit-animation:flash 3s infinite  cubic-bezier(1,0,0.5,0) ;
  	animation:flash 5s infinite  cubic-bezier(1,0,0.5,0) ;
 	 }
 .noflash{
 	font-size: x-large;
+	font-family: 'LeagueGothicRegular';
 	color: dodgerblue;
+}
+
+
+@-webkit-keyframes scrollText2 {
+	0%{
+		-webkit-transform: translateX(0px);
+	}
+	20%{
+		-webkit-transform: translateX(-204px);
+	}
+	40%{
+		-webkit-transform: translateX(-408px);
+	}
+	60%{
+		-webkit-transform: translateX(-612px);
+	}
+	80%{
+		-webkit-transform: translateX(-816px);
+	}
+	100%{
+		-webkit-transform: translateX(-1020px);
+	}
+}
+@keyframes scrollText2 {
+	0%{
+		transform: translateX(0px);
+	}
+	20%{
+		transform: translateX(-204px);
+	}
+	40%{
+		transform: translateX(-408px);
+	}
+	60%{
+		transform: translateX(-612px);
+	}
+	80%{
+		transform: translateX(-816px);
+	}
+	100%{
+		transform: translateX(-1020px);
+	}
+}
+
+.box4{
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	/*width: 200px;
+	height: 30px;*/
+	overflow: hidden;
+}
+.border4{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	/*width: 1400px;*/
+	-webkit-animation:scrollText2 12s infinite  cubic-bezier(1,0,0.5,0) ;
+	animation:scrollText2 12s infinite  cubic-bezier(1,0,0.5,0) ;
+}
+/*.border4 div{
+	/!*height: 30px;
+	width: 200px;*!/
+	overflow: hidden;
+	display: inline-block;
+}*/
+.border4:hover{
+	animation-play-state:paused;
+	-webkit-animation-play-state:paused;
 }
 /*
 #1572B3*/
