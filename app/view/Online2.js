@@ -1,12 +1,12 @@
-Ext.define('checkScheduling.view.Online', {
+Ext.define('checkScheduling.view.Online2', {
     extend: 'Ext.List',
     //alias: 'widget.doctors',
-    xtype:'onlinelist',
+    xtype:'onlinelist2',
     //cls: 'x-contacts',
     config: {
 
         variableHeights: true,
-        itemId:'onlinelist',
+        itemId:'onlinelist2',
         emptyText: '<div>无相关内容</div>',
 
 
@@ -14,7 +14,7 @@ Ext.define('checkScheduling.view.Online', {
         scrollToTopOnRefresh :true,
         //grouped:true,
         //indexBar:true,
-        store: 'Onlines',
+        store: 'Onlines2',
 
         /*listeners: {
             painted: function(){

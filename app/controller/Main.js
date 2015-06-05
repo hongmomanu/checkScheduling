@@ -12,6 +12,7 @@ Ext.define('checkScheduling.controller.Main', {
         views: [
             'Main',
             'Online',
+            'Online2',
             'PassedNum'
         ],
         requires: [
@@ -24,6 +25,7 @@ Ext.define('checkScheduling.controller.Main', {
         models: [
 
             'Online',
+            'Online2',
             'PassedNum'
 
 
@@ -31,6 +33,7 @@ Ext.define('checkScheduling.controller.Main', {
         stores: [
 
             'Onlines',
+            'Onlines2',
             'PassedNums'
 
 
@@ -49,6 +52,7 @@ Ext.define('checkScheduling.controller.Main', {
 
             nav: 'main',
             onlinelist:'onlinelist',
+            onlinelist2:'onlinelist2',
             passednum:'passednum',
             tippanel:'main #tip',
             settingbtn:'main #settingbtn'
@@ -355,7 +359,7 @@ Ext.define('checkScheduling.controller.Main', {
             item.css='flash';
             store.add(item);
             me.autoscrollData(store);
-            var text="请"+item.showno+item.patname+" 到"+item.roomno+"号机房门口等候检查";
+            var text="请"+item.showno+item.patname+" 到"+item.roomname+"号机房门口等候检查";
 
             me.playvoice(text,store,index,me.makevoiceanddisplay,me);
         }else{
@@ -370,35 +374,35 @@ Ext.define('checkScheduling.controller.Main', {
     },
     speaktimes:0,
 
+    totaltimes:2,
+
     playvoice:function(text,store,index,callback,me){
 
         //callback(store,index,me);
 
             var voiceurl=localStorage.serverurl+'audio/alert.wav';
             var tipvoice=new Audio(voiceurl);
+        tipvoice.play();
+        setTimeout(function(){
+            me.speaktimes++;
+            try{
+                navigator.speech.startSpeaking( text , {voice_name: 'xiaoyan'} );
+            }catch (e){}
+            finally{
 
+                setTimeout(function(){
+                    if(me.speaktimes==me.totaltimes){
+                        me.speaktimes=0;
+                        callback(store,index+1,me);
+                    }else{
+                        //tipvoice.removeEventListener('ended',voiceEnd,false);
+                        me.playvoice(text,store,index,callback,me)
+                    }
+                },7000)
+            };
 
-            tipvoice.addEventListener('ended',function(){
-                me.speaktimes++;
-                try{
-                    navigator.speech.startSpeaking( text , {voice_name: 'xiaoyan'} );
-                }catch (e){}
-                finally{
-                    setTimeout(function(){
-                        if(me.speaktimes==2){
-                            me.speaktimes=0;
-                            callback(store,index+1,me);
-                        }else{
-                            tipvoice.play()
-                        }
-                    },7000)
-                }
+        },3000);
 
-
-
-
-            });
-            tipvoice.play();
 
 
     },
@@ -406,8 +410,14 @@ Ext.define('checkScheduling.controller.Main', {
     initRender: function () {
 
 
+        try{
+            navigator.speech.startSpeaking( "", {voice_name: 'xiaoyan'} );
+        }catch(e){
 
-        //navigator.speech.startSpeaking( "社保卡", {voice_name: 'xiaoyan'} );
+        }finally{
+
+        }
+
         this.websocketInit();
         this.getOnlineData(this);
         this.getPassedData();

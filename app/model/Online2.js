@@ -1,4 +1,4 @@
-Ext.define('checkScheduling.model.Online', {
+Ext.define('checkScheduling.model.Online2', {
     extend: 'Ext.data.Model',
     config: {
         fields: [
