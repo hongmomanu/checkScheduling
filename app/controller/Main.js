@@ -181,8 +181,10 @@ Ext.define('checkScheduling.controller.Main', {
 
                 }
             }else if(data.type==0){
-                me.getOnlineData(me);
-                me.getPassedData();
+                //me.getOnlineData(me);
+               // me.getPassedData();
+                me.getOnlineDataUpdate(data.sortcode);
+                me.getPassedDataUpdate(data.sortcode);
             }else if(data.type==3){
                 localStorage.totaltimes=data.totaltimes;
             }
@@ -245,6 +247,29 @@ Ext.define('checkScheduling.controller.Main', {
             store.removeAt(0);
 
         }
+
+    },
+    getPassedDataUpdate:function(sortcode){
+
+        var me=this;
+        var store=this.getPassednum().getStore();
+        var successFunc = function (response, action) {
+            var res=JSON.parse(response.responseText);
+            for(var i=0;i<res.length;i++){
+                store.add(res[i]);
+            }
+
+
+        };
+        var failFunc = function (response, action) {
+            Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+
+        };
+        var url = "getbigscreenpasseddataupdate";
+        var params = {
+            sortcode:sortcode
+        };
+        CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
 
     },
     getPassedData:function(){
@@ -351,6 +376,44 @@ Ext.define('checkScheduling.controller.Main', {
         var url = "getbigscreendata";
         var params = {
             linenos:linenos
+        };
+        CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
+
+    },
+    getOnlineDataUpdate:function(sortcode){
+
+       var me=this;
+
+        var store=me.getOnlinelist().getStore();
+
+
+        var successFunc = function (response, action) {
+            var res=JSON.parse(response.responseText);
+            me.makeColor(res);
+
+            if(!me.isplaying)me.playlist=[];
+
+            if(res.length>0){
+                if(me.isplaying){
+                    me.playlist=me.playlist.concat(res);
+                }else{
+                    me.playlist=res;
+                    me.isplaying=true;
+                    me.makevoiceanddisplay(store,0,me);
+                }
+
+            }
+
+
+
+        };
+        var failFunc = function (response, action) {
+            Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+
+        };
+        var url = "getbigscreendataupdate";
+        var params = {
+            sortcode:sortcode
         };
         CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
 
@@ -491,10 +554,12 @@ Ext.define('checkScheduling.controller.Main', {
     playvoice:function(text,store,index,callback,me){
 
         //callback(store,index,me);
+            if(!this.tipvoice){
+                var voiceurl=localStorage.serverurl+'audio/alert.wav';
+                this.tipvoice=new Audio(voiceurl);
+            }
 
-            var voiceurl=localStorage.serverurl+'audio/alert.wav';
-            var tipvoice=new Audio(voiceurl);
-        tipvoice.play();
+        this.tipvoice.play();
         setTimeout(function(){
             me.speaktimes++;
             try{
@@ -510,7 +575,7 @@ Ext.define('checkScheduling.controller.Main', {
                         //tipvoice.removeEventListener('ended',voiceEnd,false);
                         me.playvoice(text,store,index,callback,me)
                     }
-                },7000)
+                },7000);
             };
 
         },3000);
