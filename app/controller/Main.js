@@ -78,7 +78,7 @@ Ext.define('checkScheduling.controller.Main', {
 
             // Set the width and height of the panel
             width: 350,
-            height: 180,
+            height: 280,
 
             // Here we specify the #id of the element we created in `index.html`
             //contentEl: 'content',
@@ -102,9 +102,9 @@ Ext.define('checkScheduling.controller.Main', {
                         },
                         {
                             xtype: 'textfield',
-                            name: 'roomno',
-                            hidden:true,
-                            value:localStorage.roomno,
+                            name: 'area',
+                            //hidden:true,
+                            value:localStorage.area,
                             label: 'roomno'
                         },
                         {
@@ -118,7 +118,7 @@ Ext.define('checkScheduling.controller.Main', {
                                 var form=btn.up('formpanel');
                                 var formdata=form.getValues();
                                 localStorage.serverurl=formdata.serverurl;
-                                //localStorage.roomno=formdata.roomno;
+                                localStorage.area=formdata.area;
                                 overlay.hide();
                                 window.location.reload();
 
@@ -151,15 +151,15 @@ Ext.define('checkScheduling.controller.Main', {
         testobj=this;
 
         var url=localStorage.serverurl;
-        //var roomno=localStorage.roomno;
+        var area=localStorage.area;
         if(!url||url==""){
             Ext.Msg.alert('提示','服务地址为空');
             return ;
         }
-        /*if(!roomno||roomno==""){
-            Ext.Msg.alert('提示','房间号为空');
+        if(!area||area==""){
+            Ext.Msg.alert('提示','诊区为空');
             return ;
-        }*/
+        }
         //url=url?"ws://"+url.split("://")[1].split(":")[0]+":3001/":"ws://localhost:3001/";
         url=url.replace(/(:\d+)/g,":3001");
         url=url.replace("http","ws");
@@ -184,8 +184,11 @@ Ext.define('checkScheduling.controller.Main', {
                 //me.getOnlineData(me);
                // me.getPassedData();
                 console.log(data);
-                me.getOnlineDataUpdate(data.sortcode);
-                me.getPassedDataUpdate(data.sortcode);
+                if(data.area== localStorage.area){
+                    me.getOnlineDataUpdate(data.sortcode);
+                    me.getPassedDataUpdate(data.sortcode);
+                }
+
             }else if(data.type==3){
                 localStorage.totaltimes=data.totaltimes;
             }else if(data.type==4){
@@ -304,7 +307,8 @@ Ext.define('checkScheduling.controller.Main', {
         };
         var url = "getbigscreenpasseddata";
         var params = {
-            linenos:linenos
+            linenos:linenos,
+            area:localStorage.area
         };
         CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
 
@@ -382,7 +386,9 @@ Ext.define('checkScheduling.controller.Main', {
         };
         var url = "getbigscreendata";
         var params = {
-            linenos:linenos
+            linenos:linenos,
+            area:localStorage.area
+
         };
         CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
 
