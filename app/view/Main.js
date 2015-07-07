@@ -15,7 +15,7 @@ Ext.define('checkScheduling.view.Main', {
             {
                 flex:9,
                 layout:'hbox',
-                padding:10,
+                padding:1,
                 items:[
 
                     {
@@ -27,13 +27,21 @@ Ext.define('checkScheduling.view.Main', {
                             {
                                 xtype : 'toolbar',
                                 docked: 'top',
-                                title: '叫 号 列 表'/*,
-                                items:[
+                                title: {
+                                    title: '叫&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号',
+                                    docked: 'right',
+                                    style: {
+                                        'text-align':'right'
+                                    }
+                                }
+                                //title: '叫 号 列 表'
+                                /*items:[
                                     {
-                                        xtype:'button',
-                                        docked: 'right',
-                                        itemId:'settingbtn',
-                                        iconCls:'settings'
+                                        xtype:'label',
+                                        text:'叫 号 列 表',
+                                        docked: 'right'
+                                        //itemId:'settingbtn',
+                                        //iconCls:'settings'
                                     }
                                 ]*/
                             },
@@ -56,6 +64,13 @@ Ext.define('checkScheduling.view.Main', {
                             {
                                 xtype : 'toolbar',
                                 docked: 'top',
+                                title: {
+                                    title: '列&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;表',
+                                    docked: 'left',
+                                    style: {
+                                        'text-align':'left'
+                                    }
+                                },
                                 /*title: '叫 号 列 表',*/
                                 items:[
                                     {
@@ -102,7 +117,7 @@ Ext.define('checkScheduling.view.Main', {
             },
             {
                 flex:1,
-                padding:10,
+                padding:1,
                 itemId:'tip',
 
                 //style: 'background-color:;',

@@ -183,10 +183,13 @@ Ext.define('checkScheduling.controller.Main', {
             }else if(data.type==0){
                 //me.getOnlineData(me);
                // me.getPassedData();
+                console.log(data);
                 me.getOnlineDataUpdate(data.sortcode);
                 me.getPassedDataUpdate(data.sortcode);
             }else if(data.type==3){
                 localStorage.totaltimes=data.totaltimes;
+            }else if(data.type==4){
+                localStorage.showlines=data.showlines;
             }
 
 
@@ -222,7 +225,7 @@ Ext.define('checkScheduling.controller.Main', {
         setInterval(function(){
             var scrollheight=listscroll.getSize().y;
             var bodyheight=Ext.getBody().getHeight();
-            if((scrollheight-(bodyheight*0.9-60))>=me.scrollinit){
+            if((scrollheight-(bodyheight*0.9-40))>=me.scrollinit){//60
 
                 me.scrollinit=me.scrollinit+(bodyheight*0.9-90);
                 listscroll.scrollTo(0,me.scrollinit);
@@ -238,14 +241,18 @@ Ext.define('checkScheduling.controller.Main', {
 
     },
     autoscrollData:function(store,list){
-        var me=this;
+        /*var me=this;
         var listscroll=list.getScrollable().getScroller();
         var scrollheight=listscroll.getSize().y;
         var bodyheight=Ext.getBody().getHeight();
-        if((scrollheight-(bodyheight*0.9-60))>=0){
+        console.log(scrollheight);
+        if((scrollheight-(bodyheight*0.9-69))>=0){
 
             store.removeAt(0);
 
+        }*/
+        if(store.data.items.length>=(parseInt(localStorage.showlines)+1)){
+            store.removeAt(0);
         }
 
     },
@@ -566,7 +573,6 @@ Ext.define('checkScheduling.controller.Main', {
                 navigator.speech.startSpeaking( text , {voice_name: 'xiaoyan'} );
             }catch (e){}
             finally{
-
                 setTimeout(function(){
                     if(me.speaktimes>=localStorage.totaltimes){
                         me.speaktimes=0;
@@ -578,7 +584,7 @@ Ext.define('checkScheduling.controller.Main', {
                 },7000);
             };
 
-        },3000);
+        },4000);
 
 
 
@@ -592,13 +598,14 @@ Ext.define('checkScheduling.controller.Main', {
         }catch(e){
 
         }finally{
-
+            if(!localStorage.totaltimes)localStorage.totaltimes=2;
+            if(!localStorage.showlines)localStorage.showlines=7;
+            this.websocketInit();
+            this.getOnlineData(this);
+            this.getPassedData();
+            this.autoscrollshow();
         }
-        if(!localStorage.totaltimes)localStorage.totaltimes=2;
-        this.websocketInit();
-        this.getOnlineData(this);
-        this.getPassedData();
-        this.autoscrollshow();
+
 
 
 

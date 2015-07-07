@@ -30,7 +30,7 @@ Ext.define('checkScheduling.view.Online', {
 
         itemTpl: [
             '<div class="{css}">',
-            '请{showno}{patname} 到{roomname}号机房门口等候检查',
+            '请<a style="font-weight: 900;">{showno}{patname}</a>到<a style="font-weight: 900;">{roomname}</a>号门口等候',
             '</div>'
         ].join('')
     }
