@@ -658,7 +658,9 @@ Ext.ClassManager.addNameAlternateMappings({
   ],
   "checkScheduling.controller.Main": [],
   "checkScheduling.model.Online": [],
+  "checkScheduling.model.PassedNum": [],
   "checkScheduling.store.Onlines": [],
+  "checkScheduling.store.PassedNums": [],
   "checkScheduling.view.Main": [],
   "checkScheduling.view.Online": [],
   "checkScheduling.view.PassedNum": []
@@ -1384,7 +1386,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.viewport.WindowsPhone": [],
   "checkScheduling.controller.Main": [],
   "checkScheduling.model.Online": [],
+  "checkScheduling.model.PassedNum": [],
   "checkScheduling.store.Onlines": [],
+  "checkScheduling.store.PassedNums": [],
   "checkScheduling.view.Main": [
     "widget.main"
   ],

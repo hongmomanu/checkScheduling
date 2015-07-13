@@ -155,14 +155,14 @@ Ext.define('checkScheduling.controller.Main', {
             var data=JSON.parse(event.data);
 
             //Ext.Msg.alert("1111");
+            console.log(data)
 
             if(data.type==1){
-                if(localStorage.roomno==data.roomno){
-                    var content=data.content;
-                    var str='<div><marquee  scrollamount=2>'+content+'</marquee></div>';
-                    me.getTippanel().setHtml(str);
 
-                }
+                var content=data.content;
+                var str='<div><marquee  scrollamount=2>'+content+'</marquee></div>';
+                me.getTippanel().setHtml(str);
+
             }else if(data.type==0){
                 me.getOnlineData(me);
                 me.getPassedData();
@@ -221,7 +221,9 @@ Ext.define('checkScheduling.controller.Main', {
         var listscroll=me.getOnlinelist().getScrollable().getScroller();
         var scrollheight=listscroll.getSize().y;
         var bodyheight=Ext.getBody().getHeight();
-        if((scrollheight-(bodyheight*0.9-60))>=0){
+        console.log(bodyheight*0.9-61);
+        console.log(scrollheight);
+        if((scrollheight-(bodyheight*0.9-61))>=0){
 
             store.removeAt(0);
 
@@ -354,7 +356,11 @@ Ext.define('checkScheduling.controller.Main', {
 
             item.css='flash';
             store.add(item);
-            me.autoscrollData(store);
+            var d = new Ext.util.DelayedTask(function(){
+                me.autoscrollData(store);
+            });
+            d.delay(500);
+
             var text="请"+item.showno+item.patname+" 到"+item.roomno+"号机房门口等候检查";
 
             me.playvoice(text,store,index,me.makevoiceanddisplay,me);
@@ -407,7 +413,7 @@ Ext.define('checkScheduling.controller.Main', {
 
 
 
-        //navigator.speech.startSpeaking( "社保卡", {voice_name: 'xiaoyan'} );
+        navigator.speech.startSpeaking( "", {voice_name: 'xiaoyan'} );
         this.websocketInit();
         this.getOnlineData(this);
         this.getPassedData();
