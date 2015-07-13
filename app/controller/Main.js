@@ -12,6 +12,7 @@ Ext.define('checkScheduling.controller.Main', {
         views: [
             'Main',
             'Online',
+            'Online2',
             'PassedNum'
         ],
         requires: [
@@ -24,6 +25,7 @@ Ext.define('checkScheduling.controller.Main', {
         models: [
 
             'Online',
+            'Online2',
             'PassedNum'
 
 
@@ -31,6 +33,7 @@ Ext.define('checkScheduling.controller.Main', {
         stores: [
 
             'Onlines',
+            'Onlines2',
             'PassedNums'
 
 
@@ -49,6 +52,7 @@ Ext.define('checkScheduling.controller.Main', {
 
             nav: 'main',
             onlinelist:'onlinelist',
+            onlinelist2:'onlinelist2',
             passednum:'passednum',
             tippanel:'main #tip',
             settingbtn:'main #settingbtn'
@@ -58,6 +62,7 @@ Ext.define('checkScheduling.controller.Main', {
 
 
     showSettingForm:function(item){
+        var me=this;
         var overlay = Ext.Viewport.add({
             xtype: 'panel',
             // We give it a left and top property to make it floating by default
@@ -73,7 +78,7 @@ Ext.define('checkScheduling.controller.Main', {
 
             // Set the width and height of the panel
             width: 350,
-            height: 120,
+            height: 280,
 
             // Here we specify the #id of the element we created in `index.html`
             //contentEl: 'content',
@@ -97,9 +102,9 @@ Ext.define('checkScheduling.controller.Main', {
                         },
                         {
                             xtype: 'textfield',
-                            name: 'roomno',
-                            hidden:true,
-                            value:localStorage.roomno,
+                            name: 'area',
+                            //hidden:true,
+                            value:localStorage.area,
                             label: 'roomno'
                         },
                         {
@@ -113,12 +118,24 @@ Ext.define('checkScheduling.controller.Main', {
                                 var form=btn.up('formpanel');
                                 var formdata=form.getValues();
                                 localStorage.serverurl=formdata.serverurl;
-                                //localStorage.roomno=formdata.roomno;
+                                localStorage.area=formdata.area;
                                 overlay.hide();
                                 window.location.reload();
 
                             },
                             itemId: 'save'
+                        },
+                        {
+                            xtype: 'button',
+                            margin:15,
+                            width:'90%',
+
+                            text: '更新',
+                            ui:'confirm',
+                            handler:function(btn){
+                                me.installbigscreen();
+
+                            }
                         }
                     ],
                     title: 'Overlay Title'
@@ -134,15 +151,15 @@ Ext.define('checkScheduling.controller.Main', {
         testobj=this;
 
         var url=localStorage.serverurl;
-        //var roomno=localStorage.roomno;
+        var area=localStorage.area;
         if(!url||url==""){
             Ext.Msg.alert('提示','服务地址为空');
             return ;
         }
-        /*if(!roomno||roomno==""){
-            Ext.Msg.alert('提示','房间号为空');
+        if(!area||area==""){
+            Ext.Msg.alert('提示','诊区为空');
             return ;
-        }*/
+        }
         //url=url?"ws://"+url.split("://")[1].split(":")[0]+":3001/":"ws://localhost:3001/";
         url=url.replace(/(:\d+)/g,":3001");
         url=url.replace("http","ws");
@@ -155,17 +172,27 @@ Ext.define('checkScheduling.controller.Main', {
             var data=JSON.parse(event.data);
 
             //Ext.Msg.alert("1111");
-            console.log(data)
 
             if(data.type==1){
+                if(localStorage.roomno==data.roomno){
+                    var content=data.content;
+                    var str='<div><marquee  scrollamount=2>'+content+'</marquee></div>';
+                    me.getTippanel().setHtml(str);
 
-                var content=data.content;
-                var str='<div><marquee  scrollamount=2>'+content+'</marquee></div>';
-                me.getTippanel().setHtml(str);
-
+                }
             }else if(data.type==0){
-                me.getOnlineData(me);
-                me.getPassedData();
+                //me.getOnlineData(me);
+               // me.getPassedData();
+                console.log(data);
+                if(data.area== localStorage.area){
+                    me.getOnlineDataUpdate(data.sortcode);
+                    me.getPassedDataUpdate(data.sortcode);
+                }
+
+            }else if(data.type==3){
+                localStorage.totaltimes=data.totaltimes;
+            }else if(data.type==4){
+                localStorage.showlines=data.showlines;
             }
 
 
@@ -201,7 +228,7 @@ Ext.define('checkScheduling.controller.Main', {
         setInterval(function(){
             var scrollheight=listscroll.getSize().y;
             var bodyheight=Ext.getBody().getHeight();
-            if((scrollheight-(bodyheight*0.9-60))>=me.scrollinit){
+            if((scrollheight-(bodyheight*0.9-40))>=me.scrollinit){//60
 
                 me.scrollinit=me.scrollinit+(bodyheight*0.9-90);
                 listscroll.scrollTo(0,me.scrollinit);
@@ -216,18 +243,43 @@ Ext.define('checkScheduling.controller.Main', {
         }, 5000)
 
     },
-    autoscrollData:function(store){
-        var me=this;
-        var listscroll=me.getOnlinelist().getScrollable().getScroller();
+    autoscrollData:function(store,list){
+        /*var me=this;
+        var listscroll=list.getScrollable().getScroller();
         var scrollheight=listscroll.getSize().y;
         var bodyheight=Ext.getBody().getHeight();
-        console.log(bodyheight*0.9-61);
         console.log(scrollheight);
-        if((scrollheight-(bodyheight*0.9-61))>=0){
+        if((scrollheight-(bodyheight*0.9-69))>=0){
 
             store.removeAt(0);
 
+        }*/
+        if(store.data.items.length>=(parseInt(localStorage.showlines)+1)){
+            store.removeAt(0);
         }
+
+    },
+    getPassedDataUpdate:function(sortcode){
+
+        var me=this;
+        var store=this.getPassednum().getStore();
+        var successFunc = function (response, action) {
+            var res=JSON.parse(response.responseText);
+            for(var i=0;i<res.length;i++){
+                store.add(res[i]);
+            }
+
+
+        };
+        var failFunc = function (response, action) {
+            Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+
+        };
+        var url = "getbigscreenpasseddataupdate";
+        var params = {
+            sortcode:sortcode
+        };
+        CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
 
     },
     getPassedData:function(){
@@ -255,7 +307,8 @@ Ext.define('checkScheduling.controller.Main', {
         };
         var url = "getbigscreenpasseddata";
         var params = {
-            linenos:linenos
+            linenos:linenos,
+            area:localStorage.area
         };
         CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
 
@@ -333,22 +386,95 @@ Ext.define('checkScheduling.controller.Main', {
         };
         var url = "getbigscreendata";
         var params = {
-            linenos:linenos
+            linenos:linenos,
+            area:localStorage.area
+
+        };
+        CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
+
+    },
+    getOnlineDataUpdate:function(sortcode){
+
+       var me=this;
+
+        var store=me.getOnlinelist().getStore();
+
+
+        var successFunc = function (response, action) {
+            var res=JSON.parse(response.responseText);
+            me.makeColor(res);
+
+            if(!me.isplaying)me.playlist=[];
+
+            if(res.length>0){
+                if(me.isplaying){
+                    me.playlist=me.playlist.concat(res);
+                }else{
+                    me.playlist=res;
+                    me.isplaying=true;
+                    me.makevoiceanddisplay(store,0,me);
+                }
+
+            }
+
+
+
+        };
+        var failFunc = function (response, action) {
+            Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+
+        };
+        var url = "getbigscreendataupdate";
+        var params = {
+            sortcode:sortcode
         };
         CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
 
     },
     makevoiceanddisplay:function(store,index,me){
-        testobj=me;
+        var list1=me.getOnlinelist();
+        var list2=me.getOnlinelist2();
+        var list=null;
+        try{
+            if(me.playlist.length-1>=index){
+                var item=me.playlist[index];
+                var showno=item.showno;
+                if(showno[showno.length-1]%2==0){
+                    store=list2.getStore();
+                    list=list2;
+                }else{
+                    store=list1.getStore();
+                    list=list1;
+                }
+            }
+        }catch(e){
+            store=list1.getStore();
+            list=list1;
+        }
+        finally{
+
+        }
+
+
+
+
         //console.log(1)
         /*var a=Ext.select('.flash');
         a.removeCls('flash');*/
-        if(store.data.items.length>0){
-            var num=store.data.items.length-1;
-            var raw=store.data.items[num].raw;
+        if(list1.getStore().data.items.length>0){
+            var num=list1.getStore().data.items.length-1;
+            var raw=list1.getStore().data.items[num].raw;
             raw.css='noflash';
-            store.data.items[num].set(raw);
-            me.removePassed(store.data.items[num],num);
+            list1.getStore().data.items[num].set(raw);
+            me.removePassed(list1.getStore().data.items[num],num);
+
+        }
+        if(list2.getStore().data.items.length>0){
+            var num=list2.getStore().data.items.length-1;
+            var raw=list2.getStore().data.items[num].raw;
+            raw.css='noflash';
+            list2.getStore().data.items[num].set(raw);
+            me.removePassed(list2.getStore().data.items[num],num);
 
         }
         if(me.playlist.length-1>=index){
@@ -356,12 +482,8 @@ Ext.define('checkScheduling.controller.Main', {
 
             item.css='flash';
             store.add(item);
-            var d = new Ext.util.DelayedTask(function(){
-                me.autoscrollData(store);
-            });
-            d.delay(500);
-
-            var text="请"+item.showno+item.patname+" 到"+item.roomno+"号机房门口等候检查";
+            me.autoscrollData(store,list);
+            var text="请"+item.showno+item.patname+" 到"+item.roomname+"号机房门口等候检查";
 
             me.playvoice(text,store,index,me.makevoiceanddisplay,me);
         }else{
@@ -376,35 +498,100 @@ Ext.define('checkScheduling.controller.Main', {
     },
     speaktimes:0,
 
+    totaltimes:2,
+
+    installbigscreen:function(){
+        this.installapk(localStorage.serverurl+"app/bigscreen.apk");
+
+    },
+
+    installapk:function(url){
+
+        Ext.Viewport.mask({ xtype: 'loadmask',
+            message: "下载中..." });
+
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,gotFS , function(){});
+        function gotFS(fileSystem) {
+
+            fileSystem.root.getFile("check.apk", {create: true, exclusive: false}, gotFileEntry,  function(){
+
+            });
+
+            function gotFileEntry(fileEntry) {
+
+
+                var fileTransfer = new FileTransfer();
+                var uri = encodeURI(url);
+
+                fileTransfer.download(
+                    uri,
+                    fileEntry.toInternalURL(),
+                    function(entry) {
+                        //console.log("download complete: " + entry.fullPath);
+                        Ext.Viewport.unmask();
+
+                        //Ext.Msg.alert("succ",entry.fullPath);
+                        cordova.plugins.fileOpener2.open(
+                            fileEntry.toInternalURL(),
+                            'application/vnd.android.package-archive'
+                        );
+                        navigator.app.exitApp();
+
+
+
+
+                    },
+                    function(error) {
+                        Ext.Msg.alert("失败","程序下载失败"+error.code);
+                        Ext.Viewport.unmask();
+                        //Ext.Msg.alert("失败","程序下载失败");
+
+                    },
+                    false,
+                    {
+                        headers: {
+                            "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
+                        }
+                    }
+                );
+
+
+
+
+            }
+
+        }
+
+    },
+
     playvoice:function(text,store,index,callback,me){
 
         //callback(store,index,me);
+            if(!this.tipvoice){
+                var voiceurl=localStorage.serverurl+'audio/alert.wav';
+                this.tipvoice=new Audio(voiceurl);
+            }
 
-            var voiceurl=localStorage.serverurl+'audio/alert.wav';
-            var tipvoice=new Audio(voiceurl);
+        this.tipvoice.play();
+        setTimeout(function(){
+            me.speaktimes++;
+            try{
+                navigator.speech.startSpeaking( text , {voice_name: 'xiaoyan'} );
+            }catch (e){}
+            finally{
+                setTimeout(function(){
+                    if(me.speaktimes>=localStorage.totaltimes){
+                        me.speaktimes=0;
+                        callback(store,index+1,me);
+                    }else{
+                        //tipvoice.removeEventListener('ended',voiceEnd,false);
+                        me.playvoice(text,store,index,callback,me)
+                    }
+                },7000);
+            };
 
+        },4000);
 
-            tipvoice.addEventListener('ended',function(){
-                me.speaktimes++;
-                try{
-                    navigator.speech.startSpeaking( text , {voice_name: 'xiaoyan'} );
-                }catch (e){}
-                finally{
-                    setTimeout(function(){
-                        if(me.speaktimes==2){
-                            me.speaktimes=0;
-                            callback(store,index+1,me);
-                        }else{
-                            tipvoice.play()
-                        }
-                    },7000)
-                }
-
-
-
-
-            });
-            tipvoice.play();
 
 
     },
@@ -412,12 +599,19 @@ Ext.define('checkScheduling.controller.Main', {
     initRender: function () {
 
 
+        try{
+            navigator.speech.startSpeaking( "", {voice_name: 'xiaoyan'} );
+        }catch(e){
 
-        navigator.speech.startSpeaking( "", {voice_name: 'xiaoyan'} );
-        this.websocketInit();
-        this.getOnlineData(this);
-        this.getPassedData();
-        this.autoscrollshow();
+        }finally{
+            if(!localStorage.totaltimes)localStorage.totaltimes=2;
+            if(!localStorage.showlines)localStorage.showlines=7;
+            this.websocketInit();
+            this.getOnlineData(this);
+            this.getPassedData();
+            this.autoscrollshow();
+        }
+
 
 
 

@@ -15,7 +15,7 @@ Ext.define('checkScheduling.view.Main', {
             {
                 flex:9,
                 layout:'hbox',
-                padding:10,
+                padding:1,
                 items:[
 
                     {
@@ -27,7 +27,51 @@ Ext.define('checkScheduling.view.Main', {
                             {
                                 xtype : 'toolbar',
                                 docked: 'top',
-                                title: '叫 号 列 表',
+                                title: {
+                                    title: '叫&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号',
+                                    docked: 'right',
+                                    style: {
+                                        'text-align':'right'
+                                    }
+                                }
+                                //title: '叫 号 列 表'
+                                /*items:[
+                                    {
+                                        xtype:'label',
+                                        text:'叫 号 列 表',
+                                        docked: 'right'
+                                        //itemId:'settingbtn',
+                                        //iconCls:'settings'
+                                    }
+                                ]*/
+                            },
+
+                            {
+                                xtype:'onlinelist'
+                            }
+
+
+                        ]
+
+
+                    },
+                    {
+                        flex:1,
+                        layout:'fit',
+                        //style: 'border-style:solid;',
+                        //style: 'background-color: #5E99CC;border-right-style:solid;',
+                        items:[
+                            {
+                                xtype : 'toolbar',
+                                docked: 'top',
+                                title: {
+                                    title: '列&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;表',
+                                    docked: 'left',
+                                    style: {
+                                        'text-align':'left'
+                                    }
+                                },
+                                /*title: '叫 号 列 表',*/
                                 items:[
                                     {
                                         xtype:'button',
@@ -39,7 +83,7 @@ Ext.define('checkScheduling.view.Main', {
                             },
 
                             {
-                                xtype:'onlinelist'
+                                xtype:'onlinelist2'
                             }
 
 
@@ -73,11 +117,11 @@ Ext.define('checkScheduling.view.Main', {
             },
             {
                 flex:1,
-                padding:10,
+                padding:1,
                 itemId:'tip',
 
                 //style: 'background-color:;',
-                html:'<div><marquee  scrollamount=2>温馨提示：（滚动播放，内容可被修改）温馨提示：（滚动播放，内容可被修改）温馨提示：（滚动播放，内容可被修改）</marquee></div>'
+                html:'<div><marquee   scrollamount=2>温馨提示：（滚动播放，内容可被修改）温馨提示：（滚动播放，内容可被修改）温馨提示：（滚动播放，内容可被修改）</marquee></div>'
             }
         ]
     }

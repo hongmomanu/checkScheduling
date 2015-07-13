@@ -140,6 +140,7 @@
     "resources": [
         "resources/images",
         "resources/icons",
+        "resources/css/fonts",
        // "resources/mespeak",
         "resources/startup"
     ],
