@@ -99,6 +99,7 @@ Ext.define('CommonUtil', {
             var me = this;
             /*if(!me.loadmask)me.loadmask=new Ext.LoadMask(Ext.getBody(), {msg:"加载中..."});
             me.loadmask.show();*/
+
             Ext.Ajax.request({
                 url: localStorage.serverurl + url,
                 method: method,
