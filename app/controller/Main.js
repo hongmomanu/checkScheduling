@@ -147,6 +147,11 @@ Ext.define('checkScheduling.controller.Main', {
 
 
     },
+
+    maketip:function(){
+        var str='<div><marquee  scrollamount=2>'+localStorage.tip+'</marquee></div>';
+        this.getTippanel().setHtml(str);
+    },
     websocketInit:function(){
         testobj=this;
 
@@ -174,10 +179,11 @@ Ext.define('checkScheduling.controller.Main', {
             //Ext.Msg.alert("1111");
 
             if(data.type==1){
-                if(localStorage.roomno==data.roomno){
+                if(localStorage.area==data.roomno){
                     var content=data.content;
                     var str='<div><marquee  scrollamount=2>'+content+'</marquee></div>';
                     me.getTippanel().setHtml(str);
+                    localStorage.tip=content;
 
                 }
             }else if(data.type==0){
@@ -193,6 +199,21 @@ Ext.define('checkScheduling.controller.Main', {
                 localStorage.totaltimes=data.totaltimes;
             }else if(data.type==4){
                 localStorage.showlines=data.showlines;
+            }else if(data.type==5){
+                if(data.area== localStorage.area){
+                    localStorage.speed=data.speed;
+                }
+
+            }else if(data.type==6){
+                //localStorage.speed=data.speed;
+                window.location.reload();
+            }else if(data.type==8){
+                //localStorage.speed=data.speed;
+                //window.location.reload();
+                if(data.num=localStorage.area){
+                    me.cleardata();
+                }
+
             }
 
 
@@ -241,6 +262,15 @@ Ext.define('checkScheduling.controller.Main', {
 
 
         }, 5000)
+
+    },
+    cleardata:function(){
+        var store1=this.getOnlinelist().getStore();
+        var store2=this.getOnlinelist2().getStore();
+        var store3=this.getPassednum().getStore();
+        store1.removeAll();
+        store2.removeAll();
+        store3.removeAll();
 
     },
     autoscrollData:function(store,list){
@@ -576,7 +606,7 @@ Ext.define('checkScheduling.controller.Main', {
         setTimeout(function(){
             me.speaktimes++;
             try{
-                navigator.speech.startSpeaking( text , {voice_name: 'xiaoyan'} );
+                navigator.speech.startSpeaking( text , {voice_name: 'xiaoyan',speed: localStorage.speed} );
             }catch (e){}
             finally{
                 setTimeout(function(){
@@ -587,7 +617,7 @@ Ext.define('checkScheduling.controller.Main', {
                         //tipvoice.removeEventListener('ended',voiceEnd,false);
                         me.playvoice(text,store,index,callback,me)
                     }
-                },7000);
+                },8000);
             };
 
         },4000);
@@ -597,19 +627,23 @@ Ext.define('checkScheduling.controller.Main', {
     },
 
     initRender: function () {
-
+        //alert("update");
 
         try{
+            cordova.plugins.autoStart.enable();
             navigator.speech.startSpeaking( "", {voice_name: 'xiaoyan'} );
         }catch(e){
 
         }finally{
             if(!localStorage.totaltimes)localStorage.totaltimes=2;
             if(!localStorage.showlines)localStorage.showlines=7;
+            if(!localStorage.speed)localStorage.speed=50;
+            if(!localStorage.tip)localStorage.tip='温馨提示：（滚动播放，内容可被修改）';
             this.websocketInit();
             this.getOnlineData(this);
             this.getPassedData();
             this.autoscrollshow();
+            this.maketip();
         }
 
 
