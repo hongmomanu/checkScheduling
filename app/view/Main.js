@@ -98,7 +98,7 @@ Ext.define('checkScheduling.view.Main', {
                             {
                                 xtype : 'toolbar',
                                 docked: 'top',
-                                title: '过 号 病 人'
+                                title: '<a style="color: red;">过 号 病 人</a>'
                             },
                             {
                                 xtype:'passednum'

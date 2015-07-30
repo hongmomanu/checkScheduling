@@ -488,7 +488,7 @@ body.x-desktop {
 		color: #ff0000;
 		font-family: 'LeagueGothicRegular';
 		/*font-size: 18px;*/
-		font-size:x-large;
+		font-size:xx-large;
 	}
 	100%{
 		opacity: 0;
@@ -503,7 +503,7 @@ body.x-desktop {
 		color: #ff0000;
 		font-family: 'LeagueGothicRegular';
 		/*font-size: 18px;*/
-		font-size:x-large;
+		font-size:xx-large;
 	}
 	100%{
 		opacity: 0;
@@ -514,14 +514,14 @@ body.x-desktop {
      top: 10px;
      left: 10px;
      width: 200px;*/
-	font-size: x-large;
+	font-size: xx-large;
 	font-family: 'LeagueGothicRegular';
  	color: #0000ff;
   	-webkit-animation:flash 3s infinite  cubic-bezier(1,0,0.5,0) ;
  	animation:flash 5s infinite  cubic-bezier(1,0,0.5,0) ;
 	 }
 .noflash{
-	font-size: x-large;
+	font-size: xx-large;
 	font-family: 'LeagueGothicRegular';
 	color: black;
 }
