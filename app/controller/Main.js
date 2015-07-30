@@ -249,9 +249,9 @@ Ext.define('checkScheduling.controller.Main', {
         setInterval(function(){
             var scrollheight=listscroll.getSize().y;
             var bodyheight=Ext.getBody().getHeight();
-            if((scrollheight-(bodyheight*0.9-40))>=me.scrollinit){//60
+            if((scrollheight-(bodyheight*0.9-60))>=me.scrollinit){//40 60
 
-                me.scrollinit=me.scrollinit+(bodyheight*0.9-90);
+                me.scrollinit=me.scrollinit+(bodyheight*0.9-90);//90
                 listscroll.scrollTo(0,me.scrollinit);
 
             }else{

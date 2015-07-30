@@ -103,6 +103,12 @@ Ext.define('checkScheduling.view.Main', {
                             {
                                 xtype:'passednum'
 
+                            },
+                            {
+                                xtype : 'toolbar',
+                                docked: 'bottom',
+                                html:'<a style="font-size:x-large;color:darkred">请过号病人到预检登记处与工作人员联系</a>'
+                                /*title: '<a style="color: red;">过 号 病 人</a>'*/
                             }
 
                         ]
