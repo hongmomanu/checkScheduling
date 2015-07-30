@@ -513,7 +513,7 @@ Ext.define('checkScheduling.controller.Main', {
             item.css='flash';
             store.add(item);
             me.autoscrollData(store,list);
-            var text="请"+item.showno+item.patname+" 到"+item.roomname+"号机房门口等候检查";
+            var text="请"+item.showno+item.patname+" 到"+item.roomname+"机房门口等候检查";
 
             me.playvoice(text,store,index,me.makevoiceanddisplay,me);
         }else{

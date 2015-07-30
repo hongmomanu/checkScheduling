@@ -1,5 +1,6 @@
 Ext.define('checkScheduling.view.Online', {
     extend: 'Ext.List',
+    //extend: 'Ext.DataView',
     //alias: 'widget.doctors',
     xtype:'onlinelist',
     //cls: 'x-contacts',

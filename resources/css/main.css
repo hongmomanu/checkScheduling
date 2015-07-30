@@ -6,12 +6,19 @@ body.x-desktop {
 	font-size:100%;
 }
 
-@font-face {
+/*@font-face {
 	font-family: 'LeagueGothicRegular';
 	src: url('fonts/leaguegothic/League_Gothic-webfont.eot');
 	src: local('☺'), url('fonts/leaguegothic/League_Gothic-webfont.woff') format('woff'), url('fonts/leaguegothic/League_Gothic-webfont.ttf') format('truetype'), url('fonts/leaguegothic/League_Gothic-webfont.svg#webfontFHzvtkso') format('svg');
 	font-weight: normal;
 	font-style: normal;
+}*/
+@font-face {
+	font-family: 'LeagueGothicRegular';
+	src: url('fonts/DroidSansFallback.ttf');
+	font-weight: normal;
+	font-style: normal;
+
 }
 
 .separator {
@@ -516,7 +523,7 @@ body.x-desktop {
 .noflash{
 	font-size: x-large;
 	font-family: 'LeagueGothicRegular';
-	color: dodgerblue;
+	color: black;
 }
 
 
@@ -587,5 +594,6 @@ body.x-desktop {
 	animation-play-state:paused;
 	-webkit-animation-play-state:paused;
 }
+.thiner{font-family:verdana;letter-spacing:5px;width:100px;filter:dropshadow(color=black,offx=0,offy=1)}
 /*
 #1572B3*/

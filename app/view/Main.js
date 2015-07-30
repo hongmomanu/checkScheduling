@@ -21,8 +21,10 @@ Ext.define('checkScheduling.view.Main', {
                     {
                         flex:1,
                         layout:'fit',
+                        xtype:'panel',
                         //style: 'border-style:solid;',
                         //style: 'background-color: #5E99CC;border-right-style:solid;',
+                        style: 'background:red',
                         items:[
                             {
                                 xtype : 'toolbar',
@@ -34,19 +36,11 @@ Ext.define('checkScheduling.view.Main', {
                                         'text-align':'right'
                                     }
                                 }
-                                //title: '叫 号 列 表'
-                                /*items:[
-                                    {
-                                        xtype:'label',
-                                        text:'叫 号 列 表',
-                                        docked: 'right'
-                                        //itemId:'settingbtn',
-                                        //iconCls:'settings'
-                                    }
-                                ]*/
+
                             },
 
                             {
+                                style: 'background-color:lightskyblue',
                                 xtype:'onlinelist'
                             }
 
@@ -58,8 +52,9 @@ Ext.define('checkScheduling.view.Main', {
                     {
                         flex:1,
                         layout:'fit',
-                        //style: 'border-style:solid;',
-                        //style: 'background-color: #5E99CC;border-right-style:solid;',
+                        xtype:'panel',
+                        //style: 'border-style:solid;', background-color: lightskyblue;
+                        style: 'background:red',
                         items:[
                             {
                                 xtype : 'toolbar',
@@ -83,6 +78,7 @@ Ext.define('checkScheduling.view.Main', {
                             },
 
                             {
+                                style: 'background-color:lightskyblue',
                                 xtype:'onlinelist2'
                             }
 
@@ -95,6 +91,7 @@ Ext.define('checkScheduling.view.Main', {
                         flex:1,
                         layout:'fit',
                         //style: 'border-style:solid;',
+                        //style: 'background-color: #759E60;',
                         style: 'background-color: #759E60;',
                         xtype:'panel',
                         items:[
