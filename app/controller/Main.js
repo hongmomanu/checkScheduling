@@ -191,8 +191,13 @@ Ext.define('checkScheduling.controller.Main', {
                // me.getPassedData();
                 console.log(data);
                 if(data.area== localStorage.area){
-                    me.getOnlineDataUpdate(data.sortcode);
+
+                    /*me.getOnlineDataUpdate(data.sortcode);
                     me.getPassedDataUpdate(data.sortcode);
+                    me.getFinishData(data.sortcode);*/
+                    me.getFireData(data.sortcode);
+                    me.getNewestStatus();
+
                 }
 
             }else if(data.type==3){
@@ -246,20 +251,31 @@ Ext.define('checkScheduling.controller.Main', {
     autoscrollshow:function(){
         var me=this;
         var listscroll=me.getPassednum().getScrollable().getScroller();
+
+        testobj=me.getNav().down('#passedtitle');
+
+
+        //var titleHeight=me.getNav().down('#passedtitle').getEl().getHeight();
+        //var neweststatusHeight=me.getNav().down('#neweststatus').getEl().getHeight();
+        //var totalHeight=me.getPassednum().up('panel');
+
         setInterval(function(){
             var scrollheight=listscroll.getSize().y;
-            var bodyheight=Ext.getBody().getHeight();
-            if((scrollheight-(bodyheight*0.9-60))>=me.scrollinit){//40 60
+            //var bodyheight=Ext.getBody().getHeight();
+            var passedHeight=me.getPassednum().element.getHeight();
+            //console.log("scrollheight:" +scrollheight);
+            //console.log("bodyheight:" +passedHeight);
 
-                me.scrollinit=me.scrollinit+(bodyheight*0.9-90);//90
+            //if((scrollheight-(bodyheight*0.9-40))>=me.scrollinit){//40
+            if((scrollheight-passedHeight)>me.scrollinit){//40
+
+                me.scrollinit=me.scrollinit+(passedHeight-50);//90
                 listscroll.scrollTo(0,me.scrollinit);
 
             }else{
                 me.scrollinit=0;
                 listscroll.scrollToTop();
             }
-
-
 
         }, 5000)
 
@@ -288,6 +304,86 @@ Ext.define('checkScheduling.controller.Main', {
             store.removeAt(0);
         }
 
+    },
+    getFireData:function(sortcode){
+        var me=this;
+        //var store=this.getPassednum().getStore();
+        var successFunc = function (response, action) {
+            var res=JSON.parse(response.responseText);
+            for(var i=0;i<res.length;i++){
+                if(res[i].stateflag=='fn'){
+
+                    me.removeFinishData(res[i]);
+
+                }else if(res[i].stateflag=='la'){
+
+                    var store=me.getPassednum().getStore();
+                    store.add(res[i]);
+                    me.removeFinishData(res[i]);
+
+
+                }else if(res[i].stateflag=='rd'){
+
+                    me.makeColor(res);
+                    var store=me.getOnlinelist().getStore();
+
+                    if(!me.isplaying)me.playlist=[];
+
+                    if(res.length>0){
+                        if(me.isplaying){
+                            me.playlist=me.playlist.concat(res);
+                        }else{
+                            me.playlist=res;
+                            me.isplaying=true;
+                            me.makevoiceanddisplay(store,0,me);
+                        }
+                    }
+
+
+                }else if(res[i].stateflag=='it'){
+                    me.makeColor(res);
+                }
+            }
+
+
+        };
+        var failFunc = function (response, action) {
+            Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+
+        };
+        var url = "getdatabysortcode";
+        var params = {
+            sortcode:sortcode
+        };
+        CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
+
+    },
+    getNewestStatus:function(){
+        var me=this;
+        var item=this.getNav().down('#neweststatus');
+
+        var colors=["red","skyblue","yellow","darksalmon","darkorange","#d88a6a"];
+        var successFunc = function (response, action) {
+            var res=JSON.parse(response.responseText);
+            var html='<div style="font-size:x-large">';
+            for(var i=0;i<res.length;i++){
+                html+='<a style="color:'+colors[i]+'">'+res[i].name+'</a>:已叫到 '+'<a style="color:'+colors[i]+'">'+res[i].value+'</a>  ';
+                if(i%2==1)html+='<br>'
+                //if(i==3)break;
+            }
+            html+='</div>';
+            item.setHtml(html);
+
+        };
+        var failFunc = function (response, action) {
+            Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+
+        };
+        var url = "getnewestwaitingstatus";
+        var params = {
+            area:localStorage.area
+        };
+        CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
     },
     getPassedDataUpdate:function(sortcode){
 
@@ -423,6 +519,72 @@ Ext.define('checkScheduling.controller.Main', {
         CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
 
     },
+    removeFinishData:function(item){
+        var store1=this.getOnlinelist().getStore();
+        var store2=this.getOnlinelist2().getStore();
+        var data1=store1.data.items;
+        var data2=store2.data.items;
+
+        var delete_arr1=[];
+        var delete_arr2=[];
+
+        Ext.each(data1,function(onedata,index){
+            if(item.sortcode==onedata.get('sortcode')) delete_arr1.push(onedata);
+        })
+        Ext.each(data2,function(onedata,index){
+            if(item.sortcode==onedata.get('sortcode'))delete_arr2.push(onedata);
+        });
+
+        store1.remove(delete_arr1);
+        store2.remove(delete_arr2);
+
+        /*Ext.each(delete_arr1,function(onedata){
+            store1.remove(delete_arr1);
+        });
+        Ext.each(delete_arr2,function(onedata){
+            store2.remove(delete_arr2);
+        });*/
+
+
+
+       // while()
+       /* var len1=data1.length;
+        var len2=data2.length;
+        for(var m=(data1.length-1);m<len1;m--){
+            if(item.sortcode==data1[m].get('sortcode')){
+                store1.removeAt(m);
+            }
+        }
+        for(var n=0;n<data2.length;n++){
+            if(item.sortcode==data2.get('sortcode')){
+                //alert(2);
+                store2.removeAt(n);
+            }
+
+        }*/
+    },
+    getFinishData:function(sortcode){
+        var me=this;
+        //var store=me.getOnlinelist().getStore();
+        var successFunc = function (response, action) {
+            var res=JSON.parse(response.responseText);
+            for(var i=0;i<res.length;i++){
+                me.removeFinishData(res[i]);
+            }
+
+        };
+        var failFunc = function (response, action) {
+            Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+
+        };
+        var url = "getdatabysortcodeandtype";
+        var params = {
+            sortcode:sortcode,
+            type:'fn'
+        };
+        CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
+
+    },
     getOnlineDataUpdate:function(sortcode){
 
        var me=this;
@@ -513,7 +675,7 @@ Ext.define('checkScheduling.controller.Main', {
             item.css='flash';
             store.add(item);
             me.autoscrollData(store,list);
-            var text="请"+item.showno+item.patname+" 到"+item.roomname+"机房门口等候检查";
+            var text="请 "+item.showno+item.patname+" 到"+item.roomname+"机房门口等候检查";
 
             me.playvoice(text,store,index,me.makevoiceanddisplay,me);
         }else{
@@ -644,6 +806,7 @@ Ext.define('checkScheduling.controller.Main', {
             this.getPassedData();
             this.autoscrollshow();
             this.maketip();
+            this.getNewestStatus();
         }
 
 

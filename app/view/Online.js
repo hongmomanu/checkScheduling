@@ -29,11 +29,12 @@ Ext.define('checkScheduling.view.Online', {
 
         ],*/
 
-        itemTpl: [
+        itemTpl: new Ext.XTemplate([
             '<div class="{css}">',
            // '请<a style="font-weight: 900;">{showno}{patname}</a>到<a style="font-weight: 900;">{roomname}</a>门口等候',
-            '<a style="font-weight: 900;">{showno}{patname}</a> <a style="font-weight: 900;">{roomname}</a>',
+            '<a style="font-weight: 900;">{showno}  {patname}</a>  <a style="font-weight: 900;">{roomname}</a>',
             '</div>'
         ].join('')
+        )
     }
 });

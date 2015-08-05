@@ -89,7 +89,7 @@ Ext.define('checkScheduling.view.Main', {
                     },
                     {
                         flex:1,
-                        layout:'fit',
+                        layout:'vbox',
                         //style: 'border-style:solid;',
                         //style: 'background-color: #759E60;',
                         style: 'background-color: #759E60;',
@@ -98,18 +98,32 @@ Ext.define('checkScheduling.view.Main', {
                             {
                                 xtype : 'toolbar',
                                 docked: 'top',
-                                title: '<a style="color: red;">过 号 病 人</a>'
+                                itemId:'passedtitle',
+                                //title: '<a style="color: red;">过 号 病 人</a>'
+                                title: '<a>请以下病人到登记处与工作人员联系</a>'
                             },
                             {
-                                xtype:'passednum'
+                                xtype:'passednum',
+                                flex:4
 
                             },
                             {
+                                itemId:'neweststatus',
+                                style:'background-color: #759E60;',
+                                html:'',
+                                flex:1
+
+                            }
+                            /*,{
+
+                            }*/
+                            /*,
+                            {
                                 xtype : 'toolbar',
                                 docked: 'bottom',
-                                html:'<a style="font-size:x-large;color:darkred">请过号病人到预检登记处与工作人员联系</a>'
-                                /*title: '<a style="color: red;">过 号 病 人</a>'*/
-                            }
+                                html:'<a style="font-size:x-large;color:darkred">请过号病人到登记处与工作人员联系</a>'
+                                /!*title: '<a style="color: red;">过 号 病 人</a>'*!/
+                            }*/
 
                         ]
 
