@@ -365,9 +365,9 @@ Ext.define('checkScheduling.controller.Main', {
         var colors=["red","skyblue","yellow","darksalmon","darkorange","#d88a6a"];
         var successFunc = function (response, action) {
             var res=JSON.parse(response.responseText);
-            var html='<div style="font-size:x-large">';
+            var html='<div style="font-size:xx-large">';
             for(var i=0;i<res.length;i++){
-                html+='<a style="color:'+colors[i]+'">'+res[i].name+'</a>:已叫到 '+'<a style="color:'+colors[i]+'">'+res[i].value+'</a>  ';
+                html+='<a style="color:'+colors[2]+'">'+res[i].name+'</a>:已叫到 '+'<a style="color:'+colors[2]+'">'+res[i].value+'</a> ';
                 if(i%2==1)html+='<br>'
                 //if(i==3)break;
             }
@@ -790,27 +790,29 @@ Ext.define('checkScheduling.controller.Main', {
 
     initRender: function () {
         //alert("update");
+        var me=this;
+        document.addEventListener("deviceready", function(){
 
-        try{
-            cordova.plugins.autoStart.enable();
-            navigator.speech.startSpeaking( "", {voice_name: 'xiaoyan'} );
-        }catch(e){
+            try{
+                cordova.plugins.autoStart.enable();
+                navigator.speech.startSpeaking( "", {voice_name: 'xiaoyan'} );
+            }catch(e){
 
-        }finally{
-            if(!localStorage.totaltimes)localStorage.totaltimes=2;
-            if(!localStorage.showlines)localStorage.showlines=7;
-            if(!localStorage.speed)localStorage.speed=50;
-            if(!localStorage.tip)localStorage.tip='温馨提示：（滚动播放，内容可被修改）';
-            this.websocketInit();
-            this.getOnlineData(this);
-            this.getPassedData();
-            this.autoscrollshow();
-            this.maketip();
-            this.getNewestStatus();
-        }
+            }finally{
+                if(!localStorage.totaltimes)localStorage.totaltimes=2;
+                if(!localStorage.showlines)localStorage.showlines=7;
+                if(!localStorage.speed)localStorage.speed=50;
+                if(!localStorage.tip)localStorage.tip='温馨提示：（滚动播放，内容可被修改）';
+                me.websocketInit();
+                me.getOnlineData(me);
+                me.getPassedData();
+                me.autoscrollshow();
+                me.maketip();
+                me.getNewestStatus();
+            }
 
 
-
+        }, false);
 
 
     }
