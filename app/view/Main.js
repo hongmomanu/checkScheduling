@@ -100,18 +100,18 @@ Ext.define('checkScheduling.view.Main', {
                                 docked: 'top',
                                 itemId:'passedtitle',
                                 //title: '<a style="color: red;">过 号 病 人</a>'
-                                title: '<a>请以下病人到登记处与工作人员联系</a>'
+                                title: '<a>请以下过号病人到登记处联系</a>'
                             },
                             {
                                 xtype:'passednum',
-                                flex:4
+                                flex:12
 
                             },
                             {
                                 itemId:'neweststatus',
                                 style:'background-color: #759E60;',
                                 html:'',
-                                flex:1
+                                flex:5
 
                             }
                             /*,{
