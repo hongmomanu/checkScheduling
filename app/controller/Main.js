@@ -306,6 +306,7 @@ Ext.define('checkScheduling.controller.Main', {
         }
 
     },
+    callingindex:0,
     getFireData:function(sortcode){
         var me=this;
         //var store=this.getPassednum().getStore();
@@ -327,8 +328,17 @@ Ext.define('checkScheduling.controller.Main', {
 
                     me.makeColor(res);
                     var store=me.getOnlinelist().getStore();
+                    if(res.length>0){
+                        me.playlist=me.playlist.concat(res);
+                        if(!me.isplaying){
+                            me.isplaying=true;
+                            me.makevoiceanddisplay(store,me.callingindex,me);
+                        }
 
-                    if(!me.isplaying)me.playlist=[];
+
+                    }
+
+                    /*if(!me.isplaying)me.playlist=[];
 
                     if(res.length>0){
                         if(me.isplaying){
@@ -338,7 +348,7 @@ Ext.define('checkScheduling.controller.Main', {
                             me.isplaying=true;
                             me.makevoiceanddisplay(store,0,me);
                         }
-                    }
+                    }*/
 
 
                 }else if(res[i].stateflag=='it'){
@@ -493,7 +503,14 @@ Ext.define('checkScheduling.controller.Main', {
             var res=JSON.parse(response.responseText);
             me.makeColor(res);
 
-            if(!me.isplaying)me.playlist=[];
+            if(res.length>0){
+                me.isplaying=true;
+                me.playlist=me.playlist.concat(res);
+                me.makevoiceanddisplay(store,me.callingindex,me);
+
+            }
+
+           /* if(!me.isplaying)me.playlist=[];
 
             if(res.length>0){
                 if(me.isplaying){
@@ -504,7 +521,7 @@ Ext.define('checkScheduling.controller.Main', {
                     me.makevoiceanddisplay(store,0,me);
                 }
 
-            }
+            }*/
 
 
 
@@ -627,11 +644,16 @@ Ext.define('checkScheduling.controller.Main', {
 
     },
     makevoiceanddisplay:function(store,index,me){
+        me.callingindex=index;
+        console.log(me.callingindex);
         var list1=me.getOnlinelist();
         var list2=me.getOnlinelist2();
         var list=null;
+
+
+
         try{
-            if(me.playlist.length-1>=index){
+            if((me.playlist.length-1)>=index){
                 var item=me.playlist[index];
                 var showno=item.showno;
                 if(showno[showno.length-1]%2==0){
@@ -649,7 +671,6 @@ Ext.define('checkScheduling.controller.Main', {
         finally{
 
         }
-
 
 
 
@@ -672,7 +693,8 @@ Ext.define('checkScheduling.controller.Main', {
             me.removePassed(list2.getStore().data.items[num],num);
 
         }
-        if(me.playlist.length-1>=index){
+        if((me.playlist.length-1)>=index){
+            console.log("make play");
             var item=me.playlist[index];
 
             item.css='flash';
@@ -682,9 +704,9 @@ Ext.define('checkScheduling.controller.Main', {
 
             me.playvoice(text,store,index,me.makevoiceanddisplay,me);
         }else{
-
             me.isplaying=false;
-            me.playlist=[];
+            /*me.isplaying=false;
+            me.playlist=[];*/
             /*navigator.speech.removeEventListener("SpeakCompleted",function(){});
             navigator.speech.stopSpeaking();*/
         }
@@ -778,6 +800,7 @@ Ext.define('checkScheduling.controller.Main', {
                 setTimeout(function(){
                     if(me.speaktimes>=localStorage.totaltimes){
                         me.speaktimes=0;
+                        delete me.playlist[index];
                         callback(store,index+1,me);
                     }else{
                         //tipvoice.removeEventListener('ended',voiceEnd,false);
