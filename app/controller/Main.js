@@ -205,8 +205,19 @@ Ext.define('checkScheduling.controller.Main', {
             }else if(data.type==4){
                 localStorage.showlines=data.showlines;
             }else if(data.type==5){
+                console.log(data);
                 if(data.area== localStorage.area){
-                    localStorage.speed=data.speed;
+                    if(data.sptype==0){
+                        console.log(0);
+                        localStorage.speed=data.speed;
+                    }else if(data.sptype==1){
+                        console.log(1);
+                        localStorage.speed1=data.speed;
+                    }else if(data.sptype==2){
+                        console.log(2);
+                        localStorage.speed2=data.speed;
+                    }
+
                 }
 
             }else if(data.type==6){
@@ -700,7 +711,9 @@ Ext.define('checkScheduling.controller.Main', {
             item.css='flash';
             store.add(item);
             me.autoscrollData(store,list);
-            var text="请 "+item.showno+item.patname+" 到"+item.roomname+"机房门口等候检查";
+            //var text="请 "+item.showno+item.patname+" 到"+item.roomname+"机房门口等候检查";
+            var text=["请 "+item.showno,item.patname," 到"+item.roomname+"机房门口等候检查"];
+
 
             me.playvoice(text,store,index,me.makevoiceanddisplay,me);
         }else{
@@ -794,7 +807,21 @@ Ext.define('checkScheduling.controller.Main', {
         setTimeout(function(){
             me.speaktimes++;
             try{
-                navigator.speech.startSpeaking( text , {voice_name: 'xiaoyan',speed: localStorage.speed} );
+                //navigator.speech.startSpeaking( text , {voice_name: 'xiaoyan',speed: localStorage.speed} );
+                navigator.speech.startSpeaking( text[0] , {voice_name: 'xiaoyan',speed: localStorage.speed} );
+                setTimeout(function(){
+                    navigator.speech.startSpeaking( text[1]+'.'+text[1] , {voice_name: 'xiaoyan',speed: localStorage.speed1} );
+
+                },2000);
+                /*setTimeout(function(){
+                    navigator.speech.startSpeaking( text[1] , {voice_name: 'xiaoyan',speed: localStorage.speed1} );
+                },4500);*/
+
+                setTimeout(function(){
+                    navigator.speech.startSpeaking( text[2] , {voice_name: 'xiaoyan',speed: localStorage.speed2} );
+                },7000);
+
+
             }catch (e){}
             finally{
                 setTimeout(function(){
@@ -806,7 +833,7 @@ Ext.define('checkScheduling.controller.Main', {
                         //tipvoice.removeEventListener('ended',voiceEnd,false);
                         me.playvoice(text,store,index,callback,me)
                     }
-                },8000);
+                },9000);
             };
 
         },4000);
@@ -829,7 +856,9 @@ Ext.define('checkScheduling.controller.Main', {
             }finally{
                 if(!localStorage.totaltimes)localStorage.totaltimes=2;
                 if(!localStorage.showlines)localStorage.showlines=7;
-                if(!localStorage.speed)localStorage.speed=50;
+                if(!localStorage.speed)localStorage.speed=30;
+                if(!localStorage.speed1)localStorage.speed1=5;
+                if(!localStorage.speed2)localStorage.speed2=40;
                 if(!localStorage.tip)localStorage.tip='温馨提示：（滚动播放，内容可被修改）';
                 me.websocketInit();
                 me.getOnlineData(me);
