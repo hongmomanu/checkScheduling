@@ -42,10 +42,12 @@ Ext.define('checkScheduling.view.Online2', {
                     var numstr=roomname.match(re);
                     if(numstr&&numstr.length>0){
                         var tempstr="&nbsp;&nbsp;";
-                        var numstrsigle=tempstr[0];
+                        var numstrsigle=numstr[0];
                         var numchange="";
                         if(numstrsigle.length==1){
-                            numchange=numstrsigle+tempstr;
+                            //numchange=numstrsigle+tempstr;
+                            numchange=tempstr+numstrsigle;
+                            console.log(roomname.replace(numstrsigle,numchange));
                             return roomname.replace(numstrsigle,numchange)
                         }else{
                             return roomname

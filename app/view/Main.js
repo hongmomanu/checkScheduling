@@ -89,7 +89,8 @@ Ext.define('checkScheduling.view.Main', {
                     },
                     {
                         flex:1,
-                        layout:'vbox',
+                        //layout:'vbox',
+                        layout:'fit',
                         //style: 'border-style:solid;',
                         //style: 'background-color: #759E60;',
                         style: 'background-color: #759E60;',
@@ -103,27 +104,29 @@ Ext.define('checkScheduling.view.Main', {
                                 title: '<a>请以下过号病人到登记处联系</a>'
                             },
                             {
-                                xtype:'passednum',
-                                flex:12
+                                xtype:'passednum'/*,
+                                //flex:12
+                                flex:1*/
 
-                            },
-                            {
+                            }
+                            /*{
                                 itemId:'neweststatus',
                                 style:'background-color: #759E60;',
                                 html:'',
                                 flex:5
 
-                            }
+                            }*/
                             /*,{
 
                             }*/
-                            /*,
+                            ,
                             {
                                 xtype : 'toolbar',
                                 docked: 'bottom',
-                                html:'<a style="font-size:x-large;color:darkred">请过号病人到登记处与工作人员联系</a>'
-                                /!*title: '<a style="color: red;">过 号 病 人</a>'*!/
-                            }*/
+                                itemId:'neweststatus',
+                                //html:'<a style="font-size:x-large;color:darkred">请过号病人到登记处与工作人员联系</a>'
+                                title: '<div style="width: 100%"><marquee   scrollamount=2><a >过 号 病 人1111111111111111</a></marquee></div>'
+                            }
 
                         ]
 

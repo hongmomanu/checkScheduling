@@ -215,6 +215,7 @@ Ext.define('checkScheduling.controller.Main', {
             }else if(data.type==8){
                 //localStorage.speed=data.speed;
                 //window.location.reload();
+                console.log(data);
                 if(data.num==localStorage.area){
                     me.cleardata();
                 }
@@ -365,14 +366,16 @@ Ext.define('checkScheduling.controller.Main', {
         var colors=["red","skyblue","yellow","darksalmon","darkorange","#d88a6a"];
         var successFunc = function (response, action) {
             var res=JSON.parse(response.responseText);
-            var html='<div style="font-size:xx-large">';
+            //var html='<div style="font-size:xx-large">';
+            var html='<div style="width:'+(item.element.getWidth()-15)+'px;" ><marquee width="100%" style="width: 100%;"   scrollamount=2>';
             for(var i=0;i<res.length;i++){
                 html+='<a style="color:'+colors[2]+'">'+res[i].name+'</a>:已叫到 '+'<a style="color:'+colors[2]+'">'+res[i].value+'</a> ';
-                if(i%2==1)html+='<br>'
+                //if(i%2==1)html+='<br>'
                 //if(i==3)break;
             }
-            html+='</div>';
-            item.setHtml(html);
+            html+='</marquee></div>';
+            //item.setHtml(html);
+            item.setTitle(html);
 
         };
         var failFunc = function (response, action) {
@@ -679,6 +682,7 @@ Ext.define('checkScheduling.controller.Main', {
 
             me.playvoice(text,store,index,me.makevoiceanddisplay,me);
         }else{
+
             me.isplaying=false;
             me.playlist=[];
             /*navigator.speech.removeEventListener("SpeakCompleted",function(){});
@@ -791,6 +795,7 @@ Ext.define('checkScheduling.controller.Main', {
     initRender: function () {
         //alert("update");
         var me=this;
+        mytestobj=me;
         document.addEventListener("deviceready", function(){
 
             try{
