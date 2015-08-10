@@ -180,25 +180,27 @@ Ext.define('checkScheduling.controller.Main', {
 
             if(data.type==1){
                 if(localStorage.area==data.roomno){
-                    var content=data.content;
+                    /*var content=data.content;
                     var str='<div><marquee  scrollamount=2>'+content+'</marquee></div>';
                     me.getTippanel().setHtml(str);
-                    localStorage.tip=content;
+                    localStorage.tip=content;*/
 
                 }
             }else if(data.type==0){
                 //me.getOnlineData(me);
                // me.getPassedData();
                 //console.log(data);
-                if(data.area== localStorage.area){
+                me.getFireDataNew(data.data);
+                /*if(data.area== localStorage.area){
 
-                    /*me.getOnlineDataUpdate(data.sortcode);
+                    /!*me.getOnlineDataUpdate(data.sortcode);
                     me.getPassedDataUpdate(data.sortcode);
-                    me.getFinishData(data.sortcode);*/
+                    me.getFinishData(data.sortcode);*!/
                     me.getFireData(data.sortcode);
+
                     //me.getNewestStatus();
 
-                }
+                }*/
 
             }else if(data.type==3){
                 localStorage.totaltimes=data.totaltimes;
@@ -249,7 +251,7 @@ Ext.define('checkScheduling.controller.Main', {
 
             me.socket.send(JSON.stringify({
                 type:"mainscreen",
-                content: '121'
+                content: localStorage.area
             }));
         };
 
@@ -318,6 +320,44 @@ Ext.define('checkScheduling.controller.Main', {
 
     },
     callingindex:0,
+    getFireDataNew:function(data){
+        var me=this;
+        for(var i=0;i<data.length;i++){
+            if(data[i].stateflag=='fn'){
+
+                me.removeFinishData(data[i]);
+
+            }else if(data[i].stateflag=='la'){
+
+                var store=me.getPassednum().getStore();
+                store.add(data[i]);
+                me.removeFinishData(data[i]);
+
+
+            }else if(data[i].stateflag=='rd'){
+
+                me.makeColor(data);
+                var store=me.getOnlinelist().getStore();
+                if(data.length>0){
+                    me.playlist=me.playlist.concat(data);
+                    if(!me.isplaying){
+                        me.isplaying=true;
+                        me.makevoiceanddisplay(store,me.callingindex,me);
+                    }
+
+
+                }
+
+
+
+
+            }else if(data[i].stateflag=='it'){
+                me.makeColor(data);
+            }
+
+        }
+
+    },
     getFireData:function(sortcode){
         var me=this;
         //var store=this.getPassednum().getStore();
@@ -416,7 +456,7 @@ Ext.define('checkScheduling.controller.Main', {
             //Ext.get('neweststatusmardiv').setWidth(item.element.getWidth()-15);
             //var html='<div style="width:'+(item.element.getWidth()-15)+'px;" ><marquee width="100%" style="width: 100%;"   scrollamount=2>';
             for(var i=0;i<res.length;i++){
-                html+='<a style="color:'+colors[2]+'">'+res[i].name+'</a>:已叫到 '+'<a style="color:'+colors[2]+'">'+res[i].value+'</a> &nbsp;&nbsp;&nbsp;&nbsp;';
+                html+='<a style="color:'+colors[1]+'">'+res[i].name+'</a>:已叫到 '+'<a style="color:'+colors[1]+'">'+res[i].value+'</a> &nbsp;&nbsp;&nbsp;&nbsp;';
                 //if(i%2==1)html+='<br>'
                 //if(i==3)break;
             }
@@ -900,7 +940,7 @@ Ext.define('checkScheduling.controller.Main', {
                 me.getOnlineData(me);
                 me.getPassedData();
                 me.autoscrollshow();
-                me.maketip();
+                //me.maketip();
                 me.getNewestStatus();
             }
 

@@ -122,12 +122,12 @@ Ext.define('checkScheduling.view.Main', {
                             ,
                             {
                                 xtype : 'toolbar',
-                                docked: 'bottom',
+                                docked: 'bottom'/*,
                                 itemId:'neweststatus',
                                 //html:'<a style="font-size:x-large;color:darkred">请过号病人到登记处与工作人员联系</a>'
                                 title: '<div id="neweststatusmardiv" style="width: 100%;font-size:x-large"><marquee id="neweststatusmar"  scrollamount=2>' +
 
-                                '</marquee></div>'
+                                '</marquee></div>'*/
                             }
 
                         ]
@@ -140,10 +140,14 @@ Ext.define('checkScheduling.view.Main', {
             {
                 flex:1,
                 padding:1,
-                itemId:'tip',
+                itemId:'neweststatus',
+                //itemId:'tip',
+                html:'<div id="neweststatusmardiv" style="width: 100%;font-size:xx-large"><marquee id="neweststatusmar"  scrollamount=2>' +
+
+                '</marquee></div>'
 
                 //style: 'background-color:;',
-                html:'<div><marquee   scrollamount=2>温馨提示：（滚动播放，内容可被修改）温馨提示：（滚动播放，内容可被修改）温馨提示：（滚动播放，内容可被修改）</marquee></div>'
+                //html:'<div><marquee   scrollamount=2>温馨提示：（滚动播放，内容可被修改）温馨提示：（滚动播放，内容可被修改）温馨提示：（滚动播放，内容可被修改）</marquee></div>'
             }
         ]
     }
