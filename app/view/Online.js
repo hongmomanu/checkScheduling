@@ -47,7 +47,7 @@ Ext.define('checkScheduling.view.Online', {
                         if(numstrsigle.length==1){
                             //numchange=tempstr+numstrsigle;
                             numchange=tempstr+numstrsigle;
-                            console.log(roomname.replace(numstrsigle,numchange));
+                            //console.log(roomname.replace(numstrsigle,numchange));
                             return roomname.replace(numstrsigle,numchange)
                         }else{
                             return roomname

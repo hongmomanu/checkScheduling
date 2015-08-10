@@ -125,7 +125,9 @@ Ext.define('checkScheduling.view.Main', {
                                 docked: 'bottom',
                                 itemId:'neweststatus',
                                 //html:'<a style="font-size:x-large;color:darkred">请过号病人到登记处与工作人员联系</a>'
-                                title: '<div style="width: 100%"><marquee   scrollamount=2><a >过 号 病 人1111111111111111</a></marquee></div>'
+                                title: '<div id="neweststatusmardiv" style="width: 100%;font-size:x-large"><marquee id="neweststatusmar"  scrollamount=2>' +
+
+                                '</marquee></div>'
                             }
 
                         ]

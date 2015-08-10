@@ -189,14 +189,14 @@ Ext.define('checkScheduling.controller.Main', {
             }else if(data.type==0){
                 //me.getOnlineData(me);
                // me.getPassedData();
-                console.log(data);
+                //console.log(data);
                 if(data.area== localStorage.area){
 
                     /*me.getOnlineDataUpdate(data.sortcode);
                     me.getPassedDataUpdate(data.sortcode);
                     me.getFinishData(data.sortcode);*/
                     me.getFireData(data.sortcode);
-                    me.getNewestStatus();
+                    //me.getNewestStatus();
 
                 }
 
@@ -205,16 +205,16 @@ Ext.define('checkScheduling.controller.Main', {
             }else if(data.type==4){
                 localStorage.showlines=data.showlines;
             }else if(data.type==5){
-                console.log(data);
+                //console.log(data);
                 if(data.area== localStorage.area){
                     if(data.sptype==0){
-                        console.log(0);
+                        //console.log(0);
                         localStorage.speed=data.speed;
                     }else if(data.sptype==1){
-                        console.log(1);
+                        //console.log(1);
                         localStorage.speed1=data.speed;
                     }else if(data.sptype==2){
-                        console.log(2);
+                        //console.log(2);
                         localStorage.speed2=data.speed;
                     }
 
@@ -226,7 +226,7 @@ Ext.define('checkScheduling.controller.Main', {
             }else if(data.type==8){
                 //localStorage.speed=data.speed;
                 //window.location.reload();
-                console.log(data);
+                //console.log(data);
                 if(data.num==localStorage.area){
                     me.cleardata();
                 }
@@ -365,12 +365,13 @@ Ext.define('checkScheduling.controller.Main', {
                 }else if(res[i].stateflag=='it'){
                     me.makeColor(res);
                 }
+                //me.getNewestStatusByItem(res[i]);
             }
 
 
         };
         var failFunc = function (response, action) {
-            Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+            //Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
 
         };
         var url = "getdatabysortcode";
@@ -380,27 +381,53 @@ Ext.define('checkScheduling.controller.Main', {
         CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
 
     },
+    getNewestStatusByItem:function(item){
+        if(item.stateflag=='rd'){
+
+
+
+
+
+
+        }
+        /*else if(item.stateflag=='la'){
+
+
+        }else if(item.stateflag=='ca'){
+
+
+        }*/
+
+
+    },
+    neweststatusItem:null,
     getNewestStatus:function(){
         var me=this;
-        var item=this.getNav().down('#neweststatus');
+        if(!me.neweststatusItem){
+            me.neweststatusItem=this.getNav().down('#neweststatus');
+            Ext.get('neweststatusmardiv').setWidth(me.neweststatusItem.element.getWidth()-15);
+        }
+        //var item=this.getNav().down('#neweststatus');
 
         var colors=["red","skyblue","yellow","darksalmon","darkorange","#d88a6a"];
         var successFunc = function (response, action) {
             var res=JSON.parse(response.responseText);
-            //var html='<div style="font-size:xx-large">';
-            var html='<div style="width:'+(item.element.getWidth()-15)+'px;" ><marquee width="100%" style="width: 100%;"   scrollamount=2>';
+            var html='';
+            //Ext.get('neweststatusmardiv').setWidth(item.element.getWidth()-15);
+            //var html='<div style="width:'+(item.element.getWidth()-15)+'px;" ><marquee width="100%" style="width: 100%;"   scrollamount=2>';
             for(var i=0;i<res.length;i++){
-                html+='<a style="color:'+colors[2]+'">'+res[i].name+'</a>:已叫到 '+'<a style="color:'+colors[2]+'">'+res[i].value+'</a> ';
+                html+='<a style="color:'+colors[2]+'">'+res[i].name+'</a>:已叫到 '+'<a style="color:'+colors[2]+'">'+res[i].value+'</a> &nbsp;&nbsp;&nbsp;&nbsp;';
                 //if(i%2==1)html+='<br>'
                 //if(i==3)break;
             }
-            html+='</marquee></div>';
+            Ext.get('neweststatusmar').setHtml(html);
+            //html+='</marquee></div>';
             //item.setHtml(html);
-            item.setTitle(html);
+            //item.setTitle(html);
 
         };
         var failFunc = function (response, action) {
-            Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+            //Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
 
         };
         var url = "getnewestwaitingstatus";
@@ -422,7 +449,7 @@ Ext.define('checkScheduling.controller.Main', {
 
         };
         var failFunc = function (response, action) {
-            Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+            //Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
 
         };
         var url = "getbigscreenpasseddataupdate";
@@ -452,7 +479,7 @@ Ext.define('checkScheduling.controller.Main', {
 
         };
         var failFunc = function (response, action) {
-            Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+            //Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
 
         };
         var url = "getbigscreenpasseddata";
@@ -538,7 +565,7 @@ Ext.define('checkScheduling.controller.Main', {
 
         };
         var failFunc = function (response, action) {
-            Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+            //Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
 
         };
         var url = "getbigscreendata";
@@ -605,7 +632,7 @@ Ext.define('checkScheduling.controller.Main', {
 
         };
         var failFunc = function (response, action) {
-            Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+            //Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
 
         };
         var url = "getdatabysortcodeandtype";
@@ -644,7 +671,7 @@ Ext.define('checkScheduling.controller.Main', {
 
         };
         var failFunc = function (response, action) {
-            Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+            //Ext.Msg.alert('获取数据失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
 
         };
         var url = "getbigscreendataupdate";
@@ -656,7 +683,8 @@ Ext.define('checkScheduling.controller.Main', {
     },
     makevoiceanddisplay:function(store,index,me){
         me.callingindex=index;
-        console.log(me.callingindex);
+
+
         var list1=me.getOnlinelist();
         var list2=me.getOnlinelist2();
         var list=null;
@@ -705,11 +733,12 @@ Ext.define('checkScheduling.controller.Main', {
 
         }
         if((me.playlist.length-1)>=index){
-            console.log("make play");
+
             var item=me.playlist[index];
 
             item.css='flash';
             store.add(item);
+            me.getNewestStatus();
             me.autoscrollData(store,list);
             //var text="请 "+item.showno+item.patname+" 到"+item.roomname+"机房门口等候检查";
             var text=["请 "+item.showno,item.patname," 到"+item.roomname+"机房门口等候检查"];
@@ -798,12 +827,9 @@ Ext.define('checkScheduling.controller.Main', {
     playvoice:function(text,store,index,callback,me){
 
         //callback(store,index,me);
-            if(!this.tipvoice){
-                var voiceurl=localStorage.serverurl+'audio/alert.wav';
-                this.tipvoice=new Audio(voiceurl);
-            }
 
-        this.tipvoice.play();
+
+        //me.tipvoice.play();
         setTimeout(function(){
             me.speaktimes++;
             try{
@@ -819,7 +845,13 @@ Ext.define('checkScheduling.controller.Main', {
 
                 setTimeout(function(){
                     navigator.speech.startSpeaking( text[2] , {voice_name: 'xiaoyan',speed: localStorage.speed2} );
-                },7000);
+                },(function(str){
+                    if(!str||str=="")return 6000;
+                    else if(str.length==2)return 5200;
+                    else if(str.length==3)return 6000;
+                    else if(str.length==4)return 6800;
+                    else return 6000;
+                }(text[1])));
 
 
             }catch (e){}
@@ -836,7 +868,7 @@ Ext.define('checkScheduling.controller.Main', {
                 },9000);
             };
 
-        },4000);
+        },500);
 
 
 
@@ -854,6 +886,10 @@ Ext.define('checkScheduling.controller.Main', {
             }catch(e){
 
             }finally{
+                /*if(!me.tipvoice){
+                    var voiceurl=localStorage.serverurl+'audio/alert.wav';
+                    me.tipvoice=new Audio(voiceurl);
+                }*/
                 if(!localStorage.totaltimes)localStorage.totaltimes=2;
                 if(!localStorage.showlines)localStorage.showlines=7;
                 if(!localStorage.speed)localStorage.speed=30;
