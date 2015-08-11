@@ -174,8 +174,10 @@ Ext.define('checkScheduling.controller.Main', {
 
         this.socket.onmessage = function(event) {
             //alert(1111);
+            //console.log(data);
             var data=JSON.parse(event.data);
 
+            //console.log(data);
             //Ext.Msg.alert("1111");
 
             if(data.type==1){
@@ -321,6 +323,8 @@ Ext.define('checkScheduling.controller.Main', {
     },
     callingindex:0,
     getFireDataNew:function(data){
+        //console.log("#_");
+        //console.log(data);
         var me=this;
         for(var i=0;i<data.length;i++){
             if(data[i].stateflag=='fn'){
@@ -887,8 +891,8 @@ Ext.define('checkScheduling.controller.Main', {
                     navigator.speech.startSpeaking( text[2] , {voice_name: 'xiaoyan',speed: localStorage.speed2} );
                 },(function(str){
                     if(!str||str=="")return 6000;
-                    else if(str.length==2)return 5200;
-                    else if(str.length==3)return 6000;
+                    else if(str.length==2)return 5400;
+                    else if(str.length==3)return 6400;
                     else if(str.length==4)return 6800;
                     else return 6000;
                 }(text[1])));
