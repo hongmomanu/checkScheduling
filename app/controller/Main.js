@@ -449,18 +449,19 @@ Ext.define('checkScheduling.controller.Main', {
         var me=this;
         if(!me.neweststatusItem){
             me.neweststatusItem=this.getNav().down('#neweststatus');
-            Ext.get('neweststatusmardiv').setWidth(me.neweststatusItem.element.getWidth()-15);
+            //Ext.get('neweststatusmardiv').setWidth(me.neweststatusItem.element.getWidth()-15);
+            Ext.get('neweststatusmardiv').setHeight(me.neweststatusItem.element.getHeight());
         }
         //var item=this.getNav().down('#neweststatus');
 
-        var colors=["red","skyblue","yellow","darksalmon","darkorange","#d88a6a"];
+        var colors=["red","black","skyblue","yellow","darksalmon","darkorange","#d88a6a"];
         var successFunc = function (response, action) {
             var res=JSON.parse(response.responseText);
             var html='';
             //Ext.get('neweststatusmardiv').setWidth(item.element.getWidth()-15);
             //var html='<div style="width:'+(item.element.getWidth()-15)+'px;" ><marquee width="100%" style="width: 100%;"   scrollamount=2>';
             for(var i=0;i<res.length;i++){
-                html+='<a style="color:'+colors[1]+'">'+res[i].name+'</a>:已叫到 '+'<a style="color:'+colors[1]+'">'+res[i].value+'</a> &nbsp;&nbsp;&nbsp;&nbsp;';
+                html+='<a style="color:'+colors[1]+';font-weight:bold;">'+res[i].name+'</a>:已叫到 '+'<a style="color:'+colors[1]+';font-weight:bold;">'+res[i].value+'</a> &nbsp;&nbsp;&nbsp;&nbsp;';
                 //if(i%2==1)html+='<br>'
                 //if(i==3)break;
             }
@@ -909,10 +910,10 @@ Ext.define('checkScheduling.controller.Main', {
                         //tipvoice.removeEventListener('ended',voiceEnd,false);
                         me.playvoice(text,store,index,callback,me)
                     }
-                },9000);
+                },9500);
             };
 
-        },500);
+        },200);
 
 
 

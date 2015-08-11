@@ -142,7 +142,7 @@ Ext.define('checkScheduling.view.Main', {
                 padding:1,
                 itemId:'neweststatus',
                 //itemId:'tip',
-                html:'<div id="neweststatusmardiv" style="width: 100%;font-size:xx-large"><marquee id="neweststatusmar"  scrollamount=2>' +
+                html:'<div id="neweststatusmardiv" style="width:100%;height:100%;font-size:xx-large;vertical-align: middle;"><marquee id="neweststatusmar"  scrollamount=2>' +
 
                 '</marquee></div>'
 
