@@ -149,7 +149,7 @@ Ext.define('checkScheduling.controller.Main', {
     },
 
     maketip:function(){
-        var str='<div><marquee  scrollamount=2>'+localStorage.tip+'</marquee></div>';
+        var str='<div class="box3"><div class="border3">'+localStorage.tip+'</div></div>';
         this.getTippanel().setHtml(str);
     },
     websocketInit:function(){
@@ -182,17 +182,17 @@ Ext.define('checkScheduling.controller.Main', {
 
             if(data.type==1){
                 if(localStorage.area==data.roomno){
-                    /*var content=data.content;
-                    var str='<div><marquee  scrollamount=2>'+content+'</marquee></div>';
+                    var content=data.content;
+                    var str='<div class="box3"><div class="border3">'+content+'</div></div>';
                     me.getTippanel().setHtml(str);
-                    localStorage.tip=content;*/
+                    localStorage.tip=content;
 
                 }
             }else if(data.type==0){
                 //me.getOnlineData(me);
                // me.getPassedData();
                 //console.log(data);
-                me.getFireDataNew(data.data);
+                me.getFireDataNew(data.data,data.newstatus);
                 /*if(data.area== localStorage.area){
 
                     /!*me.getOnlineDataUpdate(data.sortcode);
@@ -322,10 +322,12 @@ Ext.define('checkScheduling.controller.Main', {
 
     },
     callingindex:0,
-    getFireDataNew:function(data){
+    getFireDataNew:function(data,newstatus){
         //console.log("#_");
         //console.log(data);
+
         var me=this;
+        me.getNewestStatusByItem(newstatus);
         for(var i=0;i<data.length;i++){
             if(data[i].stateflag=='fn'){
 
@@ -425,15 +427,30 @@ Ext.define('checkScheduling.controller.Main', {
         CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
 
     },
-    getNewestStatusByItem:function(item){
-        if(item.stateflag=='rd'){
+    getNewestStatusByItem:function(newstatus){
 
+        var me=this;
+        /*if(!me.neweststatusItem){
+            me.neweststatusItem=this.getNav().down('#neweststatus');
+            //Ext.get('neweststatusmardiv').setWidth(me.neweststatusItem.element.getWidth()-15);
+            Ext.get('neweststatusmardiv').setHeight(me.neweststatusItem.element.getHeight());
+        }*/
 
-
-
-
-
+        //var html='';
+        var item=this.getNav().down('#neweststatus');
+        var colors=["red","black","skyblue","yellow","darksalmon","darkorange","#d88a6a"];
+        //Ext.get('neweststatusmardiv').setWidth(item.element.getWidth()-15);
+        //var html='<div style="width:'+(item.element.getWidth()-15)+'px;" ><marquee width="100%" style="width: 100%;"   scrollamount=2>';
+        var html='<div class="box5"><div class="border5">';
+        for(var i=0;i<newstatus.length;i++){
+            html+='<a style="color:'+colors[1]+';font-weight:bold;">'+newstatus[i].name+'</a>已叫到'+'<a style="color:'+colors[1]+';font-weight:bold;">'+newstatus[i].value+'</a> &nbsp;&nbsp;';
+            if(i%2==1)html+='<br>';
+            //if(i==3)break;
         }
+        html+='</div></div>';
+        //console.log(html);
+        //Ext.get('neweststatusmar').setHtml(html);
+        item.setTitle(html);
         /*else if(item.stateflag=='la'){
 
 
@@ -447,25 +464,27 @@ Ext.define('checkScheduling.controller.Main', {
     neweststatusItem:null,
     getNewestStatus:function(){
         var me=this;
-        if(!me.neweststatusItem){
+        /*if(!me.neweststatusItem){
             me.neweststatusItem=this.getNav().down('#neweststatus');
             //Ext.get('neweststatusmardiv').setWidth(me.neweststatusItem.element.getWidth()-15);
             Ext.get('neweststatusmardiv').setHeight(me.neweststatusItem.element.getHeight());
-        }
-        //var item=this.getNav().down('#neweststatus');
+        }*/
+        var item=this.getNav().down('#neweststatus');
 
         var colors=["red","black","skyblue","yellow","darksalmon","darkorange","#d88a6a"];
         var successFunc = function (response, action) {
             var res=JSON.parse(response.responseText);
-            var html='';
+           // var html='';
+            var html='<div class="box5"><div class="border5">';
             //Ext.get('neweststatusmardiv').setWidth(item.element.getWidth()-15);
             //var html='<div style="width:'+(item.element.getWidth()-15)+'px;" ><marquee width="100%" style="width: 100%;"   scrollamount=2>';
             for(var i=0;i<res.length;i++){
-                html+='<a style="color:'+colors[1]+';font-weight:bold;">'+res[i].name+'</a>:已叫到 '+'<a style="color:'+colors[1]+';font-weight:bold;">'+res[i].value+'</a> &nbsp;&nbsp;&nbsp;&nbsp;';
-                //if(i%2==1)html+='<br>'
+                html+='<a style="color:'+colors[1]+';font-weight:bold;">'+res[i].name+'</a>已叫到'+'<a style="color:'+colors[1]+';font-weight:bold;">'+res[i].value+'</a> &nbsp;&nbsp;';
+                if(i%2==1)html+='<br>';
                 //if(i==3)break;
             }
-            Ext.get('neweststatusmar').setHtml(html);
+            html+='</div></div>'
+            item.setTitle(html);
             //html+='</marquee></div>';
             //item.setHtml(html);
             //item.setTitle(html);
@@ -783,7 +802,7 @@ Ext.define('checkScheduling.controller.Main', {
 
             item.css='flash';
             store.add(item);
-            me.getNewestStatus();
+            //me.getNewestStatus();
             me.autoscrollData(store,list);
             //var text="请 "+item.showno+item.patname+" 到"+item.roomname+"机房门口等候检查";
             var text=["请 "+item.showno,item.patname," 到"+item.roomname+"机房门口等候检查"];
@@ -910,7 +929,7 @@ Ext.define('checkScheduling.controller.Main', {
                         //tipvoice.removeEventListener('ended',voiceEnd,false);
                         me.playvoice(text,store,index,callback,me)
                     }
-                },9500);
+                },10000);
             };
 
         },200);
@@ -945,7 +964,7 @@ Ext.define('checkScheduling.controller.Main', {
                 me.getOnlineData(me);
                 me.getPassedData();
                 me.autoscrollshow();
-                //me.maketip();
+                me.maketip();
                 me.getNewestStatus();
             }
 

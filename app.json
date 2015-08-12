@@ -1,6 +1,6 @@
 {
     "builds": {
-        //"web": {"default": true},
+        "web": {"default": true},
         "native": {
             "packager": "phonegap",
             "phonegap" : {
