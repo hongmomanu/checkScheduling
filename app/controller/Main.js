@@ -429,6 +429,8 @@ Ext.define('checkScheduling.controller.Main', {
     },
     getNewestStatusByItem:function(newstatus){
 
+        //newstatus=[{"name":"A","value":"A217"},{"name":"B","value":"B156"},{"name":"C","value":"C113"}];
+
         var me=this;
         if(!me.neweststatusItem){
             me.neweststatusItem=this.getNav().down('#neweststatus');
@@ -448,8 +450,11 @@ Ext.define('checkScheduling.controller.Main', {
             if(i%2==1)html+='<br>';
             //if(i==3)break;
         }
+        if(newstatus.length%2)html+='<a style="font-weight:bold;visibility: hidden;">D: 呼叫到</a><a style="visibility: hidden;">D320</a> &nbsp;&nbsp;';
         html+='</div></div>';
 
+
+          //console.log(html);
         //Ext.get('neweststatusmar').setHtml(html);
 
         me.neweststatusItem.setTitle(html);
