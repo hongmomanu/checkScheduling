@@ -19,54 +19,26 @@ Ext.define('checkScheduling.view.Main', {
                 items:[
 
                     {
-                        flex:1,
-                        layout:'fit',
+
+                        flex:2,
                         xtype:'panel',
-                        //style: 'border-style:solid;',
-                        //style: 'background-color: #5E99CC;border-right-style:solid;',
-                        style: 'background:red',
+                        title:'11',
+                        layout:'hbox',
+                        //layout:'fit',
                         items:[
+
                             {
                                 xtype : 'toolbar',
                                 docked: 'top',
-                                title: {
-                                    title: '叫&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号',
-                                    docked: 'right',
-                                    style: {
-                                        'text-align':'right'
-                                    }
-                                }
-
-                            },
-
-                            {
-                                style: 'background-color:lightskyblue',
-                                xtype:'onlinelist'
-                            }
-
-
-                        ]
-
-
-                    },
-                    {
-                        flex:1,
-                        layout:'fit',
-                        xtype:'panel',
-                        //style: 'border-style:solid;', background-color: lightskyblue;
-                        style: 'background:red',
-                        items:[
-                            {
-                                xtype : 'toolbar',
-                                docked: 'top',
-                                title: {
-                                    title: '列&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;表',
-                                    docked: 'left',
+                                hidden :false,
+                                /*title: {
+                                    title: '列&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;表'
+                                    /!*docked: 'left',
                                     style: {
                                         'text-align':'left'
-                                    }
-                                },
-                                /*title: '叫 号 列 表',*/
+                                    }*!/
+                                },*/
+                                itemId:'neweststatus',
                                 items:[
                                     {
                                         xtype:'button',
@@ -76,17 +48,81 @@ Ext.define('checkScheduling.view.Main', {
                                     }
                                 ]
                             },
-
                             {
-                                style: 'background-color:lightskyblue',
-                                xtype:'onlinelist2'
+                                flex:1,
+                                layout:'fit',
+                                xtype:'panel',
+                                //style: 'border-style:solid;',
+                                //style: 'background-color: #5E99CC;border-right-style:solid;',
+                                style: 'background:red',
+                                items:[
+                                    /*{
+                                        xtype : 'toolbar',
+                                        docked: 'top',
+                                        hidden :true,
+                                        title: {
+                                            title: '叫&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号',
+                                            docked: 'right',
+                                            style: {
+                                                'text-align':'right'
+                                            }
+                                        }
+
+                                    },*/
+
+                                    {
+                                        style: 'background-color:lightskyblue',
+                                        xtype:'onlinelist'
+                                    }
+
+
+                                ]
+
+
+                            },
+                            {
+                                flex:1,
+                                layout:'fit',
+                                xtype:'panel',
+                                //style: 'border-style:solid;', background-color: lightskyblue;
+                                style: 'background:red',
+                                items:[
+                                    /*{
+                                     xtype : 'toolbar',
+                                     docked: 'top',
+                                     hidden :true,
+                                     title: {
+                                     title: '列&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;表',
+                                     docked: 'left',
+                                     style: {
+                                     'text-align':'left'
+                                     }
+                                     },
+                                     /!*title: '叫 号 列 表',*!/
+                                     items:[
+                                     {
+                                     xtype:'button',
+                                     docked: 'right',
+                                     itemId:'settingbtn',
+                                     iconCls:'settings'
+                                     }
+                                     ]
+                                     },
+                                     */
+                                    {
+                                        style: 'background-color:lightskyblue',
+                                        xtype:'onlinelist2'
+                                    }
+
+
+                                ]
+
+
                             }
-
-
                         ]
+                    }
+                    ,
 
-
-                    },
                     {
                         flex:1,
                         //layout:'vbox',
@@ -122,10 +158,10 @@ Ext.define('checkScheduling.view.Main', {
                             ,
                             {
                                 xtype : 'toolbar',
-                                docked: 'bottom',
-                                itemId:'neweststatus'/*,
+                                docked: 'bottom'
+                                //itemId:'neweststatus'/*,
                                 //html:'<a style="font-size:x-large;color:darkred">请过号病人到登记处与工作人员联系</a>'
-                                title: '<div id="neweststatusmar" style="width: 100%;font-size:x-large"></div>'*/
+                                //title: '<div id="neweststatusmar" style="width: 100%;font-size:x-large"></div>'*/
                             }
 
                         ]

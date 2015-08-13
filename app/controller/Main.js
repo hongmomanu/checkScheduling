@@ -1,13 +1,9 @@
 /**
  * Created by jack on 5/25/15.
  */
-/**
- * Created by jack on 14-11-18.
- * main Controller used by Terminal app
- */
+
 Ext.define('checkScheduling.controller.Main', {
     extend: 'Ext.app.Controller',
-
     config: {
         views: [
             'Main',
@@ -427,67 +423,49 @@ Ext.define('checkScheduling.controller.Main', {
         CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'GET');
 
     },
+
+    makenewstatusFunc:function(newstatus){
+
+    },
     getNewestStatusByItem:function(newstatus){
 
         var me=this;
-        /*if(!me.neweststatusItem){
+        if(!me.neweststatusItem){
             me.neweststatusItem=this.getNav().down('#neweststatus');
+            //me.neweststatusItemHeight=neweststatusItem.element.getHeight();
             //Ext.get('neweststatusmardiv').setWidth(me.neweststatusItem.element.getWidth()-15);
-            Ext.get('neweststatusmardiv').setHeight(me.neweststatusItem.element.getHeight());
-        }*/
+            //Ext.get('neweststatusmardiv').setHeight(me.neweststatusItem.element.getHeight());
+        }
+        if(newstatus.length==0)return;
+        var boxindex=(parseInt((newstatus.length-1)/2)+1)*5;
 
-        //var html='';
-        var item=this.getNav().down('#neweststatus');
+
         var colors=["red","black","skyblue","yellow","darksalmon","darkorange","#d88a6a"];
-        //Ext.get('neweststatusmardiv').setWidth(item.element.getWidth()-15);
-        //var html='<div style="width:'+(item.element.getWidth()-15)+'px;" ><marquee width="100%" style="width: 100%;"   scrollamount=2>';
-        var html='<div class="box5"><div class="border5">';
+
+        var html='<div class="box5"><div class="border'+boxindex+'">';
         for(var i=0;i<newstatus.length;i++){
-            html+='<a style="color:'+colors[1]+';font-weight:bold;">'+newstatus[i].name+'</a>已叫到'+'<a style="color:'+colors[1]+';font-weight:bold;">'+newstatus[i].value+'</a> &nbsp;&nbsp;';
+            html+='<a style="color:'+colors[1]+';font-weight:bold;">'+newstatus[i].name+':</a> 呼叫到 '+'<a style="color:'+colors[1]+';font-weight:bold;">'+newstatus[i].value+'</a> &nbsp;&nbsp;';
             if(i%2==1)html+='<br>';
             //if(i==3)break;
         }
         html+='</div></div>';
-        //console.log(html);
+
         //Ext.get('neweststatusmar').setHtml(html);
-        item.setTitle(html);
-        /*else if(item.stateflag=='la'){
 
+        me.neweststatusItem.setTitle(html);
 
-        }else if(item.stateflag=='ca'){
-
-
-        }*/
 
 
     },
     neweststatusItem:null,
     getNewestStatus:function(){
         var me=this;
-        /*if(!me.neweststatusItem){
-            me.neweststatusItem=this.getNav().down('#neweststatus');
-            //Ext.get('neweststatusmardiv').setWidth(me.neweststatusItem.element.getWidth()-15);
-            Ext.get('neweststatusmardiv').setHeight(me.neweststatusItem.element.getHeight());
-        }*/
-        var item=this.getNav().down('#neweststatus');
 
-        var colors=["red","black","skyblue","yellow","darksalmon","darkorange","#d88a6a"];
         var successFunc = function (response, action) {
             var res=JSON.parse(response.responseText);
+
+            me.getNewestStatusByItem(res);
            // var html='';
-            var html='<div class="box5"><div class="border5">';
-            //Ext.get('neweststatusmardiv').setWidth(item.element.getWidth()-15);
-            //var html='<div style="width:'+(item.element.getWidth()-15)+'px;" ><marquee width="100%" style="width: 100%;"   scrollamount=2>';
-            for(var i=0;i<res.length;i++){
-                html+='<a style="color:'+colors[1]+';font-weight:bold;">'+res[i].name+'</a>已叫到'+'<a style="color:'+colors[1]+';font-weight:bold;">'+res[i].value+'</a> &nbsp;&nbsp;';
-                if(i%2==1)html+='<br>';
-                //if(i==3)break;
-            }
-            html+='</div></div>'
-            item.setTitle(html);
-            //html+='</marquee></div>';
-            //item.setHtml(html);
-            //item.setTitle(html);
 
         };
         var failFunc = function (response, action) {
