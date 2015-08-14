@@ -571,77 +571,80 @@ body.x-desktop {
 }
 
 @-webkit-keyframes scrollText1 {
+
 	0%{
 		-webkit-transform: translateY(0px);
 	}
-	10%{
-		-webkit-transform: translateY(-36px);
+	12.5%{
+		-webkit-transform: translateY(-43px);
 	}
-	20%{
-		-webkit-transform: translateY(-72px);
+	25%{
+		-webkit-transform: translateY(-86px);
 	}
-	30%{
-		-webkit-transform: translateY(-108px);
-	}
-	40%{
-		-webkit-transform: translateY(-144px);
+	37.5%{
+		-webkit-transform: translateY(-129px);
 	}
 	50%{
-		-webkit-transform: translateY(-180px);
+		-webkit-transform: translateY(-172px);
 	}
-	60%{
-		-webkit-transform: translateY(-216px);
+	62.5%{
+		-webkit-transform: translateY(-215px);
 	}
-	70%{
-		-webkit-transform: translateY(-252px);
+	75%{
+		-webkit-transform: translateY(-258px);
 	}
-	80%{
-		-webkit-transform: translateY(-288px);
-	}
-	90%{
-		-webkit-transform: translateY(-324px);
+	87.5%{
+		-webkit-transform: translateY(-301px);
 	}
 	100%{
-		-webkit-transform: translateY(-360px);
+		-webkit-transform: translateY(-344px);
 	}
+	/*90%{
+		-webkit-transform: translateY(-387px);
+	}
+	100%{
+		-webkit-transform: translateY(-430px);
+	}*/
 
 }
 
 @keyframes scrollText1 {
 
+
+
 	0%{
 		transform: translateY(0px);
 	}
-	10%{
-		transform: translateY(-36px);
+	12.5%{
+		transform: translateY(-43px);
 	}
-	20%{
-		transform: translateY(-72px);
+	25%{
+		transform: translateY(-86px);
 	}
-	30%{
-		transform: translateY(-108px);
-	}
-	40%{
-		transform: translateY(-144px);
+	37.5%{
+		transform: translateY(-129px);
 	}
 	50%{
-		transform: translateY(-180px);
+		transform: translateY(-172px);
 	}
-	60%{
-		transform: translateY(-216px);
+	62.5%{
+		transform: translateY(-215px);
 	}
-	70%{
-		transform: translateY(-252px);
+	75%{
+		transform: translateY(-258px);
 	}
-	80%{
-		transform: translateY(-288px);
-	}
-	90%{
-		transform: translateY(-324px);
+	87.5%{
+		transform: translateY(-301px);
 	}
 	100%{
-		transform: translateY(-360px);
+		transform: translateY(-344px);
 	}
+	/*90%{
+		transform: translateY(-387px);
+	}
+	100%{
+		transform: translateY(-430px);
+	}*/
 }
 
 .box3{

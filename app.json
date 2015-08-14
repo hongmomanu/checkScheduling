@@ -1,6 +1,7 @@
 {
     "builds": {
         "web": {"default": true},
+
         "native": {
             "packager": "phonegap",
             "phonegap" : {
@@ -18,6 +19,14 @@
                     "name": "checkScheduling"
                 }
             }
+        }
+    },
+
+    "production": {
+        "compressor" : {
+            //"type" : "yui"    //the default...
+            //"type" : "uglify" //or...
+            "type" : "closure"
         }
     },
 

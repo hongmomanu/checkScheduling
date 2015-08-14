@@ -1,2 +1,2 @@
 // @tag full-page
-// @require D:\soft\checkSchedulingnew\app.js
+// @require /home/jack/soft/checkScheduling/app.js
