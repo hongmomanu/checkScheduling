@@ -264,7 +264,7 @@ Ext.define('checkScheduling.controller.Main', {
         var me=this;
         var listscroll=me.getPassednum().getScrollable().getScroller();
 
-        testobj=me.getNav().down('#passedtitle');
+        //testobj=me.getNav().down('#passedtitle');
 
 
         //var titleHeight=me.getNav().down('#passedtitle').getEl().getHeight();
