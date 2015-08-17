@@ -661,8 +661,8 @@ body.x-desktop {
 
 .border3{
 	top: 0px;
-	-webkit-animation:scrollText1 40s infinite  cubic-bezier(1,0,0.5,0) ;
-	animation:scrollText1 40s infinite  cubic-bezier(1,0,0.5,0) ;
+	-webkit-animation:scrollText1 60s infinite  cubic-bezier(1,0,0.5,0) ;
+	animation:scrollText1 60s infinite  cubic-bezier(1,0,0.5,0) ;
 }
 
 .border3 div{
