@@ -13,7 +13,7 @@ Ext.define('checkScheduling.view.Main', {
 
         items: [
             {
-                flex:9,
+                flex:8,
                 layout:'hbox',
                 padding:1,
                 items:[
@@ -172,7 +172,7 @@ Ext.define('checkScheduling.view.Main', {
                 ]
             },
             {
-                flex:1.4,
+                flex:1.6,
                 padding:1,
                 //itemId:'neweststatus',
 

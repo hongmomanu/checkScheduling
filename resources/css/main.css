@@ -576,28 +576,28 @@ body.x-desktop {
 		-webkit-transform: translateY(0px);
 	}
 	12.5%{
-		-webkit-transform: translateY(-43px);
+		-webkit-transform: translateY(-38px);
 	}
 	25%{
-		-webkit-transform: translateY(-86px);
+		-webkit-transform: translateY(-76px);
 	}
 	37.5%{
-		-webkit-transform: translateY(-129px);
+		-webkit-transform: translateY(-114px);
 	}
 	50%{
-		-webkit-transform: translateY(-172px);
+		-webkit-transform: translateY(-152px);
 	}
 	62.5%{
-		-webkit-transform: translateY(-215px);
+		-webkit-transform: translateY(-190px);
 	}
 	75%{
-		-webkit-transform: translateY(-258px);
+		-webkit-transform: translateY(-228px);
 	}
 	87.5%{
-		-webkit-transform: translateY(-301px);
+		-webkit-transform: translateY(-266px);
 	}
 	100%{
-		-webkit-transform: translateY(-344px);
+		-webkit-transform: translateY(-304px);
 	}
 	/*90%{
 		-webkit-transform: translateY(-387px);
@@ -615,29 +615,30 @@ body.x-desktop {
 	0%{
 		transform: translateY(0px);
 	}
+
 	12.5%{
-		transform: translateY(-43px);
+		transform: translateY(-38px);
 	}
 	25%{
-		transform: translateY(-86px);
+		transform: translateY(-76px);
 	}
 	37.5%{
-		transform: translateY(-129px);
+		transform: translateY(-114px);
 	}
 	50%{
-		transform: translateY(-172px);
+		transform: translateY(-152px);
 	}
 	62.5%{
-		transform: translateY(-215px);
+		transform: translateY(-190px);
 	}
 	75%{
-		transform: translateY(-258px);
+		transform: translateY(-228px);
 	}
 	87.5%{
-		transform: translateY(-301px);
+		transform: translateY(-266px);
 	}
 	100%{
-		transform: translateY(-344px);
+		transform: translateY(-304px);
 	}
 	/*90%{
 		transform: translateY(-387px);
