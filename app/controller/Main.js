@@ -323,7 +323,7 @@ Ext.define('checkScheduling.controller.Main', {
         //console.log(data);
 
         var me=this;
-        me.clearnostatus(newstatus);
+        //me.clearnostatus(newstatus);
         //me.getNewestStatusByItem(newstatus);
         for(var i=0;i<data.length;i++){
             if(data[i].stateflag=='fn'){
@@ -443,7 +443,7 @@ Ext.define('checkScheduling.controller.Main', {
             arr.push({name:i,value:this.shownostatus[i]})
 
         }
-        this.getNewestStatusByItem(arr.sort(function(left,right){return left.name>right.name?1:-1}));
+        this.getNewestStatusByItem(Ext.Array.sort(arr,function(left,right){return left.name>right.name?1:-1}));
 
 
     },
