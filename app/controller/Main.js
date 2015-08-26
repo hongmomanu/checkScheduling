@@ -323,7 +323,8 @@ Ext.define('checkScheduling.controller.Main', {
         //console.log(data);
 
         var me=this;
-        me.getNewestStatusByItem(newstatus);
+        me.clearnostatus(newstatus);
+        //me.getNewestStatusByItem(newstatus);
         for(var i=0;i<data.length;i++){
             if(data[i].stateflag=='fn'){
 
@@ -424,7 +425,42 @@ Ext.define('checkScheduling.controller.Main', {
 
     },
 
-    makenewstatusFunc:function(newstatus){
+
+    shownostatus:{},
+    makenewstatusFunc:function(item){
+        //var showno=item.showno
+        var name=item.showno.slice(0,1);
+        if(this.shownostatus[name]){
+            if(item.showno.slice(1)>this.shownostatus[name].slice(1)){
+                this.shownostatus[name]=item.showno;
+            }
+
+        }else{
+            this.shownostatus[name]=item.showno;
+        }
+        var arr=[]
+        for(var i in this.shownostatus){
+            arr.push({name:i,value:this.shownostatus[i]})
+
+        }
+        this.getNewestStatusByItem(arr.sort(function(left,right){return left.name>right.name?1:-1}));
+
+
+    },
+    clearnostatus:function(newstatus){
+        //console.log(newstatus);
+        for(item in this.shownostatus){
+            var flag=true;
+            for(var i=0;i<newstatus.length;i++){
+                if(newstatus[i].name==item){
+                    flag=false;
+                    break;
+                }
+
+            }
+            if(flag)delete  this.shownostatus[item];
+        }
+
 
     },
     getNewestStatusByItem:function(newstatus){
@@ -442,11 +478,11 @@ Ext.define('checkScheduling.controller.Main', {
         var boxindex=(parseInt((newstatus.length-1)/2)+1)*5;
 
 
-        var colors=["red","black","skyblue","yellow","darksalmon","darkorange","#d88a6a"];
+        //var colors=["red","black","skyblue","yellow","darksalmon","darkorange","#d88a6a"];
 
         var html='<div class="box5"><div class="border'+boxindex+'">';
         for(var i=0;i<newstatus.length;i++){
-            html+='<a style="color:'+colors[1]+';font-weight:bold;">'+newstatus[i].name+':</a> 呼叫到 '+'<a style="color:'+colors[1]+';font-weight:bold;">'+newstatus[i].value+'</a> &nbsp;&nbsp;';
+            html+='<a style="font-weight:bold;">'+newstatus[i].name+':</a> 呼叫到 '+'<a style="font-weight:bold;">'+newstatus[i].value+'</a> &nbsp;&nbsp;';
             if(i%2==1)html+='<br>';
             //if(i==3)break;
         }
@@ -785,6 +821,7 @@ Ext.define('checkScheduling.controller.Main', {
 
             item.css='flash';
             store.add(item);
+            me.makenewstatusFunc(item);
             //me.getNewestStatus();
             me.autoscrollData(store,list);
             //var text="请 "+item.showno+item.patname+" 到"+item.roomname+"机房门口等候检查";
@@ -948,7 +985,7 @@ Ext.define('checkScheduling.controller.Main', {
                 me.getPassedData();
                 me.autoscrollshow();
                 me.maketip();
-                me.getNewestStatus();
+                //me.getNewestStatus();
             }
 
 
