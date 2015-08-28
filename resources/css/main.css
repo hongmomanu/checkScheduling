@@ -572,7 +572,7 @@ body.x-desktop {
 
 @-webkit-keyframes scrollText1 {
 
-	0%{
+	/*0%{
 		-webkit-transform: translateY(0px);
 	}
 	12.5%{
@@ -598,13 +598,39 @@ body.x-desktop {
 	}
 	100%{
 		-webkit-transform: translateY(-304px);
-	}
-	/*90%{
-		-webkit-transform: translateY(-387px);
-	}
-	100%{
-		-webkit-transform: translateY(-430px);
 	}*/
+	0%{
+		-webkit-transform: translateY(0px);
+	}
+	10%{
+		-webkit-transform: translateY(-38px);
+	}
+	20%{
+		-webkit-transform: translateY(-76px);
+	}
+	30%{
+		-webkit-transform: translateY(-114px);
+	}
+	40%{
+		-webkit-transform: translateY(-152px);
+	}
+	50%{
+		-webkit-transform: translateY(-190px);
+	}
+	60%{
+		-webkit-transform: translateY(-228px);
+	}
+	70%{
+		-webkit-transform: translateY(-266px);
+	}
+	80%{
+		-webkit-transform: translateY(-304px);
+	}90%{
+		-webkit-transform: translateY(-342px);
+	}100%{
+		-webkit-transform: translateY(-380px);
+	}
+
 
 }
 
@@ -612,7 +638,7 @@ body.x-desktop {
 
 
 
-	0%{
+	/*0%{
 		transform: translateY(0px);
 	}
 
@@ -639,13 +665,41 @@ body.x-desktop {
 	}
 	100%{
 		transform: translateY(-304px);
-	}
-	/*90%{
-		transform: translateY(-387px);
-	}
-	100%{
-		transform: translateY(-430px);
 	}*/
+
+	0%{
+		transform: translateY(0px);
+	}
+
+	10%{
+		transform: translateY(-38px);
+	}
+	20%{
+		transform: translateY(-76px);
+	}
+	30%{
+		transform: translateY(-114px);
+	}
+	40%{
+		transform: translateY(-152px);
+	}
+	50%{
+		transform: translateY(-190px);
+	}
+	60%{
+		transform: translateY(-228px);
+	}
+	70%{
+		transform: translateY(-266px);
+	}
+	80%{
+		transform: translateY(-304px);
+	}90%{
+		transform: translateY(-342px);
+	}100%{
+		transform: translateY(-380px);
+	}
+
 }
 
 .box3{
@@ -662,8 +716,8 @@ body.x-desktop {
 
 .border3{
 	top: 0px;
-	-webkit-animation:scrollText1 60s infinite  cubic-bezier(1,0,0.5,0) ;
-	animation:scrollText1 60s infinite  cubic-bezier(1,0,0.5,0) ;
+	-webkit-animation:scrollText1 80s infinite  cubic-bezier(1,0,0.5,0) ;
+	animation:scrollText1 80s infinite  cubic-bezier(1,0,0.5,0) ;
 }
 
 .border3 div{

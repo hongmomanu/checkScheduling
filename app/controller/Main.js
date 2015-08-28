@@ -482,11 +482,11 @@ Ext.define('checkScheduling.controller.Main', {
 
         var html='<div class="box5"><div class="border'+boxindex+'">';
         for(var i=0;i<newstatus.length;i++){
-            html+='<a style="font-weight:bold;">'+newstatus[i].name+':</a> 呼叫到 '+'<a style="font-weight:bold;">'+newstatus[i].value+'</a> &nbsp;&nbsp;';
+            html+='<a style="font-weight:bold;">'+newstatus[i].name+':</a> 当前呼叫到 '+'<a style="font-weight:bold;">'+newstatus[i].value+'</a> &nbsp;&nbsp;';
             if(i%2==1)html+='<br>';
             //if(i==3)break;
         }
-        if(newstatus.length%2)html+='<a style="font-weight:bold;visibility: hidden;">D: 呼叫到</a><a style="visibility: hidden;">D320</a> &nbsp;&nbsp;';
+        if(newstatus.length%2)html+='<a style="font-weight:bold;visibility: hidden;">D: 当前呼叫到</a><a style="visibility: hidden;">D320</a> &nbsp;&nbsp;';
         html+='</div></div>';
 
 
