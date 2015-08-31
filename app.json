@@ -1,6 +1,6 @@
 {
     "builds": {
-        "web": {"default": false},
+        "web": {"default": true},
 
         "native": {
             "packager": "cordova",

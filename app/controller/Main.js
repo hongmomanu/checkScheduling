@@ -146,6 +146,7 @@ Ext.define('checkScheduling.controller.Main', {
 
     maketip:function(){
         var str='<div class="box3"><div class="border3">'+localStorage.tip+'</div></div>';
+        //var str='<div style="height: 100%" ><marquee height="100%"   direction=up   scrollamount=0>'+localStorage.tip+'</marquee></div>';
         this.getTippanel().setHtml(str);
     },
     websocketInit:function(){

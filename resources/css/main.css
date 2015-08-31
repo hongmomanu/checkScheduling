@@ -627,45 +627,18 @@ body.x-desktop {
 		-webkit-transform: translateY(-304px);
 	}90%{
 		-webkit-transform: translateY(-342px);
-	}100%{
-		-webkit-transform: translateY(-380px);
-	}
+	}93%{
+				  -webkit-transform: translateY(-380px);
+	 }96%{
+						-webkit-transform: translateY(-418px);
+	  }100%{
+							   -webkit-transform: translateY(-456px);
+	   }
 
 
 }
 
 @keyframes scrollText1 {
-
-
-
-	/*0%{
-		transform: translateY(0px);
-	}
-
-	12.5%{
-		transform: translateY(-38px);
-	}
-	25%{
-		transform: translateY(-76px);
-	}
-	37.5%{
-		transform: translateY(-114px);
-	}
-	50%{
-		transform: translateY(-152px);
-	}
-	62.5%{
-		transform: translateY(-190px);
-	}
-	75%{
-		transform: translateY(-228px);
-	}
-	87.5%{
-		transform: translateY(-266px);
-	}
-	100%{
-		transform: translateY(-304px);
-	}*/
 
 	0%{
 		transform: translateY(0px);
@@ -696,8 +669,12 @@ body.x-desktop {
 		transform: translateY(-304px);
 	}90%{
 		transform: translateY(-342px);
-	}100%{
+	}93%{
 		transform: translateY(-380px);
+	}96%{
+		transform: translateY(-418px);
+	}100%{
+		transform: translateY(-456px);
 	}
 
 }
@@ -716,8 +693,8 @@ body.x-desktop {
 
 .border3{
 	top: 0px;
-	-webkit-animation:scrollText1 80s infinite  cubic-bezier(1,0,0.5,0) ;
-	animation:scrollText1 80s infinite  cubic-bezier(1,0,0.5,0) ;
+	-webkit-animation:scrollText1 120s infinite  cubic-bezier(1,0,0.5,0) ;
+	animation:scrollText1 120s infinite  cubic-bezier(1,0,0.5,0) ;
 }
 
 .border3 div{
