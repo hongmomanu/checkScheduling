@@ -854,7 +854,7 @@ Ext.define('checkScheduling.controller.Main', {
                 left: '30%',
                 top: '30%',
                 padding:0,
-                style:{"background-color": "transparent", "border": 0},
+                style:{"background-color": "transparent"},
                 //style:{"filter": "alpha(Opacity=80)", "-moz-opacity": 0.2,"opacity":0.2},
 
                 // Make it modal so you can click the mask to hide the overlay
@@ -867,7 +867,7 @@ Ext.define('checkScheduling.controller.Main', {
                 // Set the width and height of the panel
                 /*width: '100%',
                  height: '100%',*/
-                html:'<div id="shownamemsg" > '+item.patname+'</div>'
+                html:'<div id="shownamemsg"  > '+item.patname+'</div>'
 
             });
             /*$('#shownamemsg').width(0);
