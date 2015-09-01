@@ -152,6 +152,7 @@ Ext.define('checkScheduling.controller.Main', {
     websocketInit:function(){
         testobj=this;
 
+
         var url=localStorage.serverurl;
         var area=localStorage.area;
         if(!url||url==""){
@@ -829,6 +830,7 @@ Ext.define('checkScheduling.controller.Main', {
             var text=["请 "+item.showno,item.patname," 到"+item.roomname+"机房门口等候检查"];
 
 
+            me.makeshowmsg(item);
             me.playvoice(text,store,index,me.makevoiceanddisplay,me);
         }else{
             me.isplaying=false;
@@ -838,6 +840,45 @@ Ext.define('checkScheduling.controller.Main', {
             navigator.speech.stopSpeaking();*/
         }
 
+
+
+    },
+    makeshowmsg:function(item){
+
+            //if(Ext.get('overshowlayerpanel'))Ext.get('overshowlayerpanel').destroy();
+            Ext.Viewport.add({
+                xtype: 'panel',
+                id:'overshowlayerpanel',
+
+                // We give it a left and top property to make it floating by default
+                left: '30%',
+                top: '30%',
+                padding:0,
+                style:{"background-color": "transparent", "border": 0},
+                //style:{"filter": "alpha(Opacity=80)", "-moz-opacity": 0.2,"opacity":0.2},
+
+                // Make it modal so you can click the mask to hide the overlay
+                modal: false,
+                hideOnMaskTap: false,
+
+                // Make it hidden by default
+                hidden: false,
+
+                // Set the width and height of the panel
+                /*width: '100%',
+                 height: '100%',*/
+                html:'<div id="shownamemsg" > '+item.patname+'</div>'
+
+            });
+            /*$('#shownamemsg').width(0);
+            $('#shownamemsg').height(0);*/
+            $('#shownamemsg').html(item.patname);
+            Ext.get('overshowlayerpanel').show();
+
+
+
+        $('#overshowlayerpanel').animate({fontSize:'8em'},'slow').fadeIn(1500).fadeOut(1500).fadeIn(1500).fadeOut(1500).fadeIn(1500)
+            .animate({fontSize:'1em'},'slow').fadeOut(1500);
 
 
     },
@@ -945,6 +986,8 @@ Ext.define('checkScheduling.controller.Main', {
                     if(me.speaktimes>=localStorage.totaltimes){
                         me.speaktimes=0;
                         delete me.playlist[index];
+                        //me.overshowlayer.hide();
+                        //Ext.get('overshowlayerpanel').hide();
                         callback(store,index+1,me);
                     }else{
                         //tipvoice.removeEventListener('ended',voiceEnd,false);

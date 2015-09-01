@@ -43,10 +43,27 @@ Ext.application({
 
     launch: function() {
         // Destroy the #appLoadingIndicator element
+
+        var oHead = document.getElementsByTagName('HEAD').item(0);
+
+        var oScript= document.createElement("script");
+
+        oScript.type = "text/javascript";
+
+        oScript.src=localStorage.serverurl+'app/jquery.min.js';
+
+        oHead.appendChild( oScript);
+
+
         Ext.fly('appLoadingIndicator').destroy();
 
         // Initialize the main view
-        Ext.Viewport.add(Ext.create('checkScheduling.view.Main'));
+        setTimeout(function(){
+            Ext.Viewport.add(Ext.create('checkScheduling.view.Main'));
+        },800);
+        //alert(11);
+
+
     },
 
     onUpdated: function() {
