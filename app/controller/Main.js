@@ -76,7 +76,7 @@ Ext.define('checkScheduling.controller.Main', {
             width: 350,
             height: 280,
 
-            // Here we specify the #id of the element we created in `index.html`
+            // Here we specify the #id of the element we created in `main.html`
             //contentEl: 'content',
 
             // Style the content and make it scrollable
@@ -187,20 +187,9 @@ Ext.define('checkScheduling.controller.Main', {
 
                 }
             }else if(data.type==0){
-                //me.getOnlineData(me);
-               // me.getPassedData();
-                //console.log(data);
+
                 me.getFireDataNew(data.data,data.newstatus);
-                /*if(data.area== localStorage.area){
 
-                    /!*me.getOnlineDataUpdate(data.sortcode);
-                    me.getPassedDataUpdate(data.sortcode);
-                    me.getFinishData(data.sortcode);*!/
-                    me.getFireData(data.sortcode);
-
-                    //me.getNewestStatus();
-
-                }*/
 
             }else if(data.type==3){
                 localStorage.totaltimes=data.totaltimes;
@@ -223,12 +212,9 @@ Ext.define('checkScheduling.controller.Main', {
                 }
 
             }else if(data.type==6){
-                //localStorage.speed=data.speed;
                 window.location.reload();
             }else if(data.type==8){
-                //localStorage.speed=data.speed;
-                //window.location.reload();
-                //console.log(data);
+
                 if(data.num==localStorage.area){
                     me.cleardata();
                 }
@@ -266,21 +252,10 @@ Ext.define('checkScheduling.controller.Main', {
         var me=this;
         var listscroll=me.getPassednum().getScrollable().getScroller();
 
-        //testobj=me.getNav().down('#passedtitle');
-
-
-        //var titleHeight=me.getNav().down('#passedtitle').getEl().getHeight();
-        //var neweststatusHeight=me.getNav().down('#neweststatus').getEl().getHeight();
-        //var totalHeight=me.getPassednum().up('panel');
-
         setInterval(function(){
             var scrollheight=listscroll.getSize().y;
-            //var bodyheight=Ext.getBody().getHeight();
             var passedHeight=me.getPassednum().element.getHeight();
-            //console.log("scrollheight:" +scrollheight);
-            //console.log("bodyheight:" +passedHeight);
 
-            //if((scrollheight-(bodyheight*0.9-40))>=me.scrollinit){//40
             if((scrollheight-passedHeight)>me.scrollinit){//40
 
                 me.scrollinit=me.scrollinit+(passedHeight-50);//90
@@ -349,7 +324,6 @@ Ext.define('checkScheduling.controller.Main', {
                         me.isplaying=true;
                         me.makevoiceanddisplay(store,me.callingindex,me);
                     }
-
 
                 }
 
@@ -681,30 +655,7 @@ Ext.define('checkScheduling.controller.Main', {
         store1.remove(delete_arr1);
         store2.remove(delete_arr2);
 
-        /*Ext.each(delete_arr1,function(onedata){
-            store1.remove(delete_arr1);
-        });
-        Ext.each(delete_arr2,function(onedata){
-            store2.remove(delete_arr2);
-        });*/
 
-
-
-       // while()
-       /* var len1=data1.length;
-        var len2=data2.length;
-        for(var m=(data1.length-1);m<len1;m--){
-            if(item.sortcode==data1[m].get('sortcode')){
-                store1.removeAt(m);
-            }
-        }
-        for(var n=0;n<data2.length;n++){
-            if(item.sortcode==data2.get('sortcode')){
-                //alert(2);
-                store2.removeAt(n);
-            }
-
-        }*/
     },
     getFinishData:function(sortcode){
         var me=this;
@@ -824,20 +775,21 @@ Ext.define('checkScheduling.controller.Main', {
             item.css='flash';
             store.add(item);
             me.makenewstatusFunc(item);
-            //me.getNewestStatus();
             me.autoscrollData(store,list);
-            //var text="请 "+item.showno+item.patname+" 到"+item.roomname+"机房门口等候检查";
             var text=["请 "+item.showno,item.patname," 到"+item.roomname+"机房门口等候检查"];
 
 
-            me.makeshowmsg(item);
+            try{
+                me.makeshowmsg(item);
+            }catch(err){
+               me.overshowdiv.hide();
+            }finally{
+
+            }
             me.playvoice(text,store,index,me.makevoiceanddisplay,me);
         }else{
             me.isplaying=false;
-            /*me.isplaying=false;
-            me.playlist=[];*/
-            /*navigator.speech.removeEventListener("SpeakCompleted",function(){});
-            navigator.speech.stopSpeaking();*/
+
         }
 
 
@@ -845,8 +797,10 @@ Ext.define('checkScheduling.controller.Main', {
     },
     makeshowmsg:function(item){
 
+
             //if(Ext.get('overshowlayerpanel'))Ext.get('overshowlayerpanel').destroy();
-            Ext.Viewport.add({
+        if(!this.overshowdiv){
+            this.overshowdiv=Ext.Viewport.add({
                 xtype: 'panel',
                 id:'overshowlayerpanel',
 
@@ -867,18 +821,23 @@ Ext.define('checkScheduling.controller.Main', {
                 // Set the width and height of the panel
                 /*width: '100%',
                  height: '100%',*/
-                html:'<div id="shownamemsg"  > '+item.patname+'</div>'
+                html:'<div id="shownamemsg"  ></div>'
 
             });
+        }
+        if(!this.shownamemsg)this.shownamemsg=$('#shownamemsg');
+        if(!this.overshowlayerpanel)this.overshowlayerpanel=$('#overshowlayerpanel');
+
             /*$('#shownamemsg').width(0);
             $('#shownamemsg').height(0);*/
-            $('#shownamemsg').html(item.patname);
-            Ext.get('overshowlayerpanel').show();
+        this.shownamemsg.html(item.patname);
+        this.overshowlayerpanel.show();
+        this.overshowdiv.show();
 
-
-
-        $('#overshowlayerpanel').animate({fontSize:'8em'},'slow').fadeIn(1500).fadeOut(1500).fadeIn(1500).fadeOut(1500).fadeIn(1500)
-            .animate({fontSize:'1em'},'slow').fadeOut(1500);
+        /*$('#overshowlayerpanel').animate({fontSize:'8em'},'slow').fadeIn(1500).fadeOut(1500).fadeIn(1500).fadeOut(1500).fadeIn(1500)
+            .animate({fontSize:'1em'},'slow').fadeOut(1500);*/
+        this.overshowlayerpanel.animate({fontSize:'8em'},'slow').animate({fontSize:'1em'},1500).animate({fontSize:'8em'},1500).animate({fontSize:'1em'},1500)
+            .animate({fontSize:'8em'},1500).animate({fontSize:'1em'},1500).fadeOut(500);
 
 
     },
@@ -956,7 +915,7 @@ Ext.define('checkScheduling.controller.Main', {
 
 
         //me.tipvoice.play();
-        setTimeout(function(){
+        //setTimeout(function(){
             me.speaktimes++;
             try{
                 //navigator.speech.startSpeaking( text , {voice_name: 'xiaoyan',speed: localStorage.speed} );
@@ -986,8 +945,7 @@ Ext.define('checkScheduling.controller.Main', {
                     if(me.speaktimes>=localStorage.totaltimes){
                         me.speaktimes=0;
                         delete me.playlist[index];
-                        //me.overshowlayer.hide();
-                        //Ext.get('overshowlayerpanel').hide();
+
                         callback(store,index+1,me);
                     }else{
                         //tipvoice.removeEventListener('ended',voiceEnd,false);
@@ -996,7 +954,7 @@ Ext.define('checkScheduling.controller.Main', {
                 },10000);
             };
 
-        },200);
+        //},100);
 
 
 
@@ -1018,8 +976,8 @@ Ext.define('checkScheduling.controller.Main', {
                     var voiceurl=localStorage.serverurl+'audio/alert.wav';
                     me.tipvoice=new Audio(voiceurl);
                 }*/
-                if(!localStorage.totaltimes)localStorage.totaltimes=2;
-                if(!localStorage.showlines)localStorage.showlines=7;
+                if(!localStorage.totaltimes)localStorage.totaltimes=1;
+                if(!localStorage.showlines)localStorage.showlines=9;
                 if(!localStorage.speed)localStorage.speed=30;
                 if(!localStorage.speed1)localStorage.speed1=5;
                 if(!localStorage.speed2)localStorage.speed2=40;
