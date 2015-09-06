@@ -1,2 +1,2 @@
-jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore cordova/platforms/android/build/outputs/apk/outpatientBig.keystore platforms/android/build/outputs/apk/android-armv7-release-unsigned.apk outpatientBig
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore platforms/android/build/outputs/apk/outpatientBig.keystore platforms/android/build/outputs/apk/android-armv7-release-unsigned.apk outpatientBig
 shayu626

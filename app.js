@@ -54,7 +54,6 @@ Ext.application({
 
         oHead.appendChild( oScript);
 
-
         Ext.fly('appLoadingIndicator').destroy();
 
         // Initialize the main view

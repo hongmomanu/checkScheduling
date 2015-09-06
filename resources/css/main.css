@@ -941,3 +941,7 @@ body.x-desktop {
 .thiner{font-family:verdana;letter-spacing:5px;width:100px;filter:dropshadow(color=black,offx=0,offy=1)}
 /*
 #1572B3*/
+.x-toolbar-dark  {
+	background-image: -webkit-linear-gradient(top, #1e93e4,#1676b9 3%,#122D3A);
+}
+

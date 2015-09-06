@@ -821,7 +821,7 @@ Ext.define('checkScheduling.controller.Main', {
                 // Set the width and height of the panel
                 /*width: '100%',
                  height: '100%',*/
-                html:'<div id="shownamemsg"  ></div>'
+                html:'<div id="shownamemsg" style="text-align: center;"  ></div>'
 
             });
         }
@@ -830,14 +830,14 @@ Ext.define('checkScheduling.controller.Main', {
 
             /*$('#shownamemsg').width(0);
             $('#shownamemsg').height(0);*/
-        this.shownamemsg.html(item.patname);
+        this.shownamemsg.html(item.patname+'<br>'+item.roomname);
         this.overshowlayerpanel.show();
         this.overshowdiv.show();
 
         /*$('#overshowlayerpanel').animate({fontSize:'8em'},'slow').fadeIn(1500).fadeOut(1500).fadeIn(1500).fadeOut(1500).fadeIn(1500)
             .animate({fontSize:'1em'},'slow').fadeOut(1500);*/
         this.overshowlayerpanel.animate({fontSize:'8em'},'slow').animate({fontSize:'1em'},1500).animate({fontSize:'8em'},1500).animate({fontSize:'1em'},1500)
-            .animate({fontSize:'8em'},1500).animate({fontSize:'1em'},1500).fadeOut(500);
+            .animate({fontSize:'8em'},1500).animate({fontSize:'1em'},1500).fadeOut(100);
 
 
     },
@@ -981,7 +981,7 @@ Ext.define('checkScheduling.controller.Main', {
                 if(!localStorage.speed)localStorage.speed=30;
                 if(!localStorage.speed1)localStorage.speed1=5;
                 if(!localStorage.speed2)localStorage.speed2=40;
-                if(!localStorage.tip)localStorage.tip='温馨提示：（滚动播放，内容可被修改）';
+                if(!localStorage.tip)localStorage.tip='1．超声检查叫号系统为统一编号、统一叫号。超声检查项目以英文字母开头，根据不同的检查部位与类型，有不同的检查分类，如A、B、C、D等。因检查项目及病情复杂程度不同，各检查类别速度会有快慢，例如C会相对慢些。<br>2．超声检查请先到服务台登记取号。已预约或登记的病友请在此安静等候，关注大屏幕，等候诊室呼叫。请查看地面标识（绿色地带为1至7号诊室，黄色地带为8至10号诊室，红色地带为11至14号诊室），熟悉诊室分布情况。被诊室呼叫到后，请尽快前往指定的诊室门口等候医生呼叫。<br>3．“过号”后，请重新到服务台登记处激活，会在当前号延后数位病人插入。<br>4．门诊病人检查结束10分钟后，可去候诊大厅门外对面自助机打印B超报告单。<br>5．上腹部（肝胆胰脾）检查请空腹（不吃不喝）8至10小时以上，泌尿系统及经腹子宫附件检查请憋尿（喝水）。<br>6. 超声检查床均配有脚垫，您可以穿着鞋子上床（请不要脱鞋）。<br>7．为创造良好的候诊环境，请大家保持安静！绍兴市人民医院祝各位病友早日康复！';
                 me.websocketInit();
                 me.getOnlineData(me);
                 me.getPassedData();
